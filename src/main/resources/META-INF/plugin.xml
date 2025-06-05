@@ -32,4 +32,19 @@
                                  bundle="messages.SettingsBundle"/>
         <applicationService serviceImplementation="com.github.aleksikangas.ideavisualvm.settings.VisualVmSettings"/>
     </extensions>
+
+    <resource-bundle>messages.ActionsBundle</resource-bundle>
+
+    <actions>
+        <action id="com.github.aleksikangas.ideavisualvm.actions.AttachVisualVmAction"
+                class="com.github.aleksikangas.ideavisualvm.actions.AttachVisualVmAction"
+                icon="/icons/visualvm_16.svg">
+            <add-to-group group-id="RunTab.TopToolbar" anchor="last"/>
+        </action>
+        <action id="com.github.aleksikangas.ideavisualvm.actions.LaunchVisualVmAction"
+                class="com.github.aleksikangas.ideavisualvm.actions.LaunchVisualVmAction"
+                icon="/icons/visualvm_16.svg">
+            <add-to-group group-id="RunMenu" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>
