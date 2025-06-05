@@ -20,6 +20,111 @@ public record VisualVmOptions(String executable,
                               Optional<Long> snapshotSamplerPid,
                               Optional<Long> stopSamplerPid,
                               Optional<Boolean> windowToFront) {
+  public static final class Builder {
+    @NotNull
+    private final String executable;
+    @Nullable
+    private String jdkHome = null;
+    @Nullable
+    private String openFile = null;
+    @Nullable
+    private Long openPid = null;
+    @Nullable
+    private String openJmx = null;
+    @Nullable
+    private Long threadDumpPid = null;
+    @Nullable
+    private Long heapDumpPid = null;
+    @Nullable
+    private Long startCpuSamplerPid = null;
+    @Nullable
+    private Long startMemorySamplerPid = null;
+    @Nullable
+    private Long snapshotSamplerPid = null;
+    @Nullable
+    private Long stopSamplerPid = null;
+    @Nullable
+    private Boolean windowToFront = null;
+
+    public Builder(final @NotNull String executable) {
+      this.executable = executable;
+    }
+
+    public VisualVmOptions build() {
+      return new VisualVmOptions(this);
+    }
+
+    public Builder withJdkHome(@Nullable final String jdkHome) {
+      this.jdkHome = jdkHome;
+      return this;
+    }
+
+    public Builder withOpenFile(@Nullable final String openFile) {
+      this.openFile = openFile;
+      return this;
+    }
+
+    public Builder withOpenPid(@Nullable final Long openPid) {
+      this.openPid = openPid;
+      return this;
+    }
+
+    public Builder withOpenJmx(@Nullable final String openJmx) {
+      this.openJmx = openJmx;
+      return this;
+    }
+
+    public Builder withThreadDumpPid(@Nullable final Long threadDumpPid) {
+      this.threadDumpPid = threadDumpPid;
+      return this;
+    }
+
+    public Builder withHeapDumpPid(@Nullable final Long heapDumpPid) {
+      this.heapDumpPid = heapDumpPid;
+      return this;
+    }
+
+    public Builder withStartCpuSamplerPid(@Nullable final Long startCpuSamplerPid) {
+      this.startCpuSamplerPid = startCpuSamplerPid;
+      return this;
+    }
+
+    public Builder withStartMemorySamplerPid(@Nullable final Long startMemorySamplerPid) {
+      this.startMemorySamplerPid = startMemorySamplerPid;
+      return this;
+    }
+
+    public Builder withSnapshotSamplerPid(@Nullable final Long snapshotSamplerPid) {
+      this.snapshotSamplerPid = snapshotSamplerPid;
+      return this;
+    }
+
+    public Builder withStopSamplerPid(@Nullable final Long stopSamplerPid) {
+      this.stopSamplerPid = stopSamplerPid;
+      return this;
+    }
+
+    public Builder withWindowToFront(@Nullable final Boolean windowToFront) {
+      this.windowToFront = windowToFront;
+      return this;
+    }
+  }
+
+  private VisualVmOptions(final Builder builder) {
+    this(builder.executable,
+         Optional.ofNullable(builder.jdkHome),
+         Optional.ofNullable(builder.openFile),
+         Optional.ofNullable(builder.openPid),
+         Optional.ofNullable(builder.openJmx),
+         Optional.ofNullable(builder.threadDumpPid),
+         Optional.ofNullable(builder.heapDumpPid),
+         Optional.ofNullable(builder.startCpuSamplerPid),
+         Optional.ofNullable(builder.startMemorySamplerPid),
+         Optional.ofNullable(builder.snapshotSamplerPid),
+         Optional.ofNullable(builder.stopSamplerPid),
+         Optional.ofNullable(builder.windowToFront));
+  }
+
   // -------------------
   // Setup Options
   // -------------------
@@ -129,109 +234,4 @@ public record VisualVmOptions(String executable,
    * Brings the currently opened VisualVM window to front if supported by the OS window system.
    */
   static final String WINDOW_TO_FRONT = "--window-to-front";
-
-  public static final class Builder {
-    @NotNull
-    private final String executable;
-    @Nullable
-    private String jdkHome = null;
-    @Nullable
-    private String openFile = null;
-    @Nullable
-    private Long openPid = null;
-    @Nullable
-    private String openJmx = null;
-    @Nullable
-    private Long threadDumpPid = null;
-    @Nullable
-    private Long heapDumpPid = null;
-    @Nullable
-    private Long startCpuSamplerPid = null;
-    @Nullable
-    private Long startMemorySamplerPid = null;
-    @Nullable
-    private Long snapshotSamplerPid = null;
-    @Nullable
-    private Long stopSamplerPid = null;
-    @Nullable
-    private Boolean windowToFront = null;
-
-    public Builder(final @NotNull String executable) {
-      this.executable = executable;
-    }
-
-    public VisualVmOptions build() {
-      return new VisualVmOptions(this);
-    }
-
-    public Builder withJdkHome(@Nullable final String jdkHome) {
-      this.jdkHome = jdkHome;
-      return this;
-    }
-
-    public Builder withOpenFile(@Nullable final String openFile) {
-      this.openFile = openFile;
-      return this;
-    }
-
-    public Builder withOpenPid(@Nullable final Long openPid) {
-      this.openPid = openPid;
-      return this;
-    }
-
-    public Builder withOpenJmx(@Nullable final String openJmx) {
-      this.openJmx = openJmx;
-      return this;
-    }
-
-    public Builder withThreadDumpPid(@Nullable final Long threadDumpPid) {
-      this.threadDumpPid = threadDumpPid;
-      return this;
-    }
-
-    public Builder withHeapDumpPid(@Nullable final Long heapDumpPid) {
-      this.heapDumpPid = heapDumpPid;
-      return this;
-    }
-
-    public Builder withStartCpuSamplerPid(@Nullable final Long startCpuSamplerPid) {
-      this.startCpuSamplerPid = startCpuSamplerPid;
-      return this;
-    }
-
-    public Builder withStartMemorySamplerPid(@Nullable final Long startMemorySamplerPid) {
-      this.startMemorySamplerPid = startMemorySamplerPid;
-      return this;
-    }
-
-    public Builder withSnapshotSamplerPid(@Nullable final Long snapshotSamplerPid) {
-      this.snapshotSamplerPid = snapshotSamplerPid;
-      return this;
-    }
-
-    public Builder withStopSamplerPid(@Nullable final Long stopSamplerPid) {
-      this.stopSamplerPid = stopSamplerPid;
-      return this;
-    }
-
-    public Builder withWindowToFront(@Nullable final Boolean windowToFront) {
-      this.windowToFront = windowToFront;
-      return this;
-    }
-  }
-
-  private VisualVmOptions(final Builder builder) {
-    this(builder.executable,
-         Optional.ofNullable(builder.jdkHome),
-         Optional.ofNullable(builder.openFile),
-         Optional.ofNullable(builder.openPid),
-         Optional.ofNullable(builder.openJmx),
-         Optional.ofNullable(builder.threadDumpPid),
-         Optional.ofNullable(builder.heapDumpPid),
-         Optional.ofNullable(builder.startCpuSamplerPid),
-         Optional.ofNullable(builder.startMemorySamplerPid),
-         Optional.ofNullable(builder.snapshotSamplerPid),
-         Optional.ofNullable(builder.stopSamplerPid),
-         Optional.ofNullable(builder.windowToFront));
-  }
 }
