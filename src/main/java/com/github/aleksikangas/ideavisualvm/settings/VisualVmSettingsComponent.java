@@ -43,6 +43,7 @@ public final class VisualVmSettingsComponent {
 
     overrideJdkCheckBox.addActionListener(e -> enableJdkOverrideComponents(overrideJdkCheckBox.isSelected()));
     enableJdkOverrideComponents(overrideJdkCheckBox.isSelected());
+    jdkHomePathBrowseButton.addActionListener(e -> browseJdkHomePath());
   }
 
   public JPanel getPanel() {
@@ -97,5 +98,16 @@ public final class VisualVmSettingsComponent {
     jdkHomeLabel.setEnabled(enabled);
     jdkHomePathTextField.setEnabled(enabled);
     jdkHomePathBrowseButton.setEnabled(enabled);
+  }
+
+  private void browseJdkHomePath() {
+    final FileChooserDescriptor fileChooserDescriptor = FileChooserDescriptorFactory.singleDir();
+    fileChooserDescriptor.setHideIgnored(true);
+    final Project defaultProject = ProjectManager.getInstance().getDefaultProject();
+    final VirtualFile preSelectedFile = LocalFileSystem.getInstance().findFileByPath(jdkHomePathTextField.getText());
+    final VirtualFile chosenFile = FileChooser.chooseFile(fileChooserDescriptor, defaultProject, preSelectedFile);
+    if (chosenFile != null) {
+      jdkHomePathTextField.setText(chosenFile.getPath());
+    }
   }
 }
