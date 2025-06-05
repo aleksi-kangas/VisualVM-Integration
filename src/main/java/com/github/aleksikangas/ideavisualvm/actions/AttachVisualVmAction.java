@@ -16,6 +16,7 @@ public final class AttachVisualVmAction extends AbstractPidAwareVisualVmAction {
       final var visualVmOptions = new VisualVmOptions
               .Builder(state.executablePath)
               .withOpenPid(pid)
+              .withWindowToFront(state.windowToFront ? true : null)
               .build();
       VisualVm.launch(visualVmOptions);
     });
@@ -23,7 +24,7 @@ public final class AttachVisualVmAction extends AbstractPidAwareVisualVmAction {
 
   @Override
   public void update(@NotNull final AnActionEvent e) {
-    // TODO: Disable when VisualVM configuration is invalid.
-    // e.getPresentation().setEnabledAndVisible(condition);
+    final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
+    e.getPresentation().setEnabled(state.isValid());
   }
 }

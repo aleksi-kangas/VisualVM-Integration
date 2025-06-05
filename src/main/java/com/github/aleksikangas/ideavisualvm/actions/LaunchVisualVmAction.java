@@ -16,14 +16,15 @@ public final class LaunchVisualVmAction extends AnAction {
     final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
     final var visualVmOptions = new VisualVmOptions
             .Builder(state.executablePath)
+            .withWindowToFront(state.windowToFront ? true : null)
             .build();
     VisualVm.launch(visualVmOptions);
   }
 
   @Override
   public void update(@NotNull final AnActionEvent e) {
-    // TODO: Disable when VisualVM configuration is invalid.
-    // e.getPresentation().setEnabledAndVisible(condition);
+    final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
+    e.getPresentation().setEnabled(state.isValid());
   }
 
   @Override

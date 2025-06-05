@@ -25,20 +25,23 @@ public final class VisualVmSettingsComponent {
   private final JBTextField jdkHomePathTextField = new JBTextField();
   private final JButton jdkHomePathBrowseButton = new JButton("Browse");
 
+  private final JBCheckBox windowToFrontCheckBox = new JBCheckBox();
+
   public VisualVmSettingsComponent() {
     mainPanel = FormBuilder.createFormBuilder()
                            .addLabeledComponent(new JBLabel("VisualVM executable:"), executablePathField)
+                           .addSeparator()
                            .addComponentToRightColumn(executablePathBrowseButton)
                            .addLabeledComponent(new JBLabel("Override JDK"), overrideJdkCheckBox)
                            .addLabeledComponent(jdkHomeLabel, jdkHomePathTextField)
                            .addComponentToRightColumn(jdkHomePathBrowseButton)
+                           .addSeparator()
+                           .addLabeledComponent(new JBLabel("Window to front:"), windowToFrontCheckBox)
                            .getPanel();
 
     executablePathBrowseButton.addActionListener(e -> browseExecutablePath());
 
-    overrideJdkCheckBox.addActionListener(e -> {
-      enableJdkOverrideComponents(overrideJdkCheckBox.isSelected());
-    });
+    overrideJdkCheckBox.addActionListener(e -> enableJdkOverrideComponents(overrideJdkCheckBox.isSelected()));
     enableJdkOverrideComponents(overrideJdkCheckBox.isSelected());
   }
 
@@ -69,6 +72,14 @@ public final class VisualVmSettingsComponent {
 
   public void setJdkHome(final String jdkHome) {
     jdkHomePathTextField.setText(jdkHome);
+  }
+
+  public boolean windowToFront() {
+    return windowToFrontCheckBox.isSelected();
+  }
+
+  public void setWindowToFront(final boolean windowToFront) {
+    windowToFrontCheckBox.setSelected(windowToFront);
   }
 
   private void browseExecutablePath() {
