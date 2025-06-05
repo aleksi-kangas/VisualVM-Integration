@@ -25,6 +25,11 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-
+        <applicationConfigurable parentId="tools"
+                                 id="com.github.aleksikangas.ideavisualvm.settings.VisualVmSettingsConfigurable"
+                                 instance="com.github.aleksikangas.ideavisualvm.settings.VisualVmSettingsConfigurable"
+                                 key="com.github.aleksikangas.ideavisualvm.settings.VisualVmSettings.displayName"
+                                 bundle="messages.SettingsBundle"/>
+        <applicationService serviceImplementation="com.github.aleksikangas.ideavisualvm.settings.VisualVmSettings"/>
     </extensions>
 </idea-plugin>
