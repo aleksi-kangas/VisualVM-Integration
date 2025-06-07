@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.aleksi-kangas"
-version = "1.0-SNAPSHOT"
+version = "v0.0.1"
 
 repositories {
     mavenCentral()
@@ -21,8 +21,8 @@ dependencies {
         create("IC", "2025.1")
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
 
-      // Add necessary plugin dependencies for compilation here, example:
-      // bundledPlugin("com.intellij.java")
+        // Add necessary plugin dependencies for compilation here, example:
+        // bundledPlugin("com.intellij.java")
     }
 }
 
