@@ -44,19 +44,19 @@
             </action>
             <action id="com.github.aleksikangas.ideavisualvm.actions.StartCpuSamplerVisualVmAction"
                     class="com.github.aleksikangas.ideavisualvm.actions.StartCpuSamplerVisualVmAction"
-                    icon="/icons/visualvm_16.svg">
+                    icon="/icons/visualvm_start_cpu_sampler_16.svg">
             </action>
             <action id="com.github.aleksikangas.ideavisualvm.actions.StartMemorySamplerVisualVmAction"
                     class="com.github.aleksikangas.ideavisualvm.actions.StartMemorySamplerVisualVmAction"
-                    icon="/icons/visualvm_16.svg">
+                    icon="/icons/visualvm_start_memory_sampler_16.svg">
             </action>
             <action id="com.github.aleksikangas.ideavisualvm.actions.SnapshotSamplerVisualVmAction"
                     class="com.github.aleksikangas.ideavisualvm.actions.SnapshotSamplerVisualVmAction"
-                    icon="/icons/visualvm_16.svg">
+                    icon="/icons/visualvm_snapshot_sampler_16.svg">
             </action>
             <action id="com.github.aleksikangas.ideavisualvm.actions.StopSamplerVisualVmAction"
                     class="com.github.aleksikangas.ideavisualvm.actions.StopSamplerVisualVmAction"
-                    icon="/icons/visualvm_16.svg">
+                    icon="/icons/visualvm_stop_sampler_16.svg">
             </action>
             <separator/>
             <add-to-group group-id="RunTab.TopToolbar" anchor="last"/>
