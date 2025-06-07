@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="ideaVisualVM [signPlugin]" type="GradleRunConfiguration" factoryName="Gradle"
+    <configuration default="false" name="VisualVM Integration [signPlugin]" type="GradleRunConfiguration"
+                   factoryName="Gradle"
                    nameIsGenerated="true">
         <ExternalSystemSettings>
             <option name="env">

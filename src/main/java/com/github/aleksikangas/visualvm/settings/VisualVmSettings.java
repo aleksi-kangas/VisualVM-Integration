@@ -10,8 +10,8 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.Objects;
 
-@State(name = "com.github.aleksikangas.ideavisualvm.settings.VisualVmSettings",
-        storages = @Storage("ideaVisualVmPluginSettings.xml"))
+@State(name = "com.github.aleksikangas.visualvm.settings.VisualVmSettings",
+        storages = @Storage("VisualVMIntegrationPluginSettings.xml"))
 public final class VisualVmSettings implements PersistentStateComponent<VisualVmSettings.State> {
   private State state = new State();
 
