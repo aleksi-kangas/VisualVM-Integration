@@ -1,4 +1,4 @@
-package com.github.aleksikangas.ideavisualvm.actions;
+package com.github.aleksikangas.visualvm.actions;
 
 import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;

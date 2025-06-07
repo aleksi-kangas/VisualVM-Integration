@@ -1,4 +1,4 @@
-package com.github.aleksikangas.ideavisualvm.settings;
+package com.github.aleksikangas.visualvm.settings;
 
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.util.NlsContexts;

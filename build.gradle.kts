@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.aleksi-kangas"
-version = "v0.0.1"
+version = "0.0.1"
 
 repositories {
     mavenCentral()

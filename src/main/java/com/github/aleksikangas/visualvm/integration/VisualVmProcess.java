@@ -1,4 +1,4 @@
-package com.github.aleksikangas.ideavisualvm.visualvm;
+package com.github.aleksikangas.visualvm.integration;
 
 import java.io.IOException;
 import java.util.ArrayList;

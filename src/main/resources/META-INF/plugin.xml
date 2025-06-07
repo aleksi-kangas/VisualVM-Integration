@@ -1,21 +1,19 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.github.aleksi-kangas.ideaVisualVM</id>
+    <id>com.github.aleksi-kangas.VisualVM-Integration</id>
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-name -->
-    <name>IdeaVisualVM</name>
+    <name>VisualVM Integration</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor url="https://github.com/aleksi-kangas/ideaVisualVM">Aleksi Kangas</vendor>
+    <vendor url="https://github.com/aleksi-kangas/visual">Aleksi Kangas</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
     <description><![CDATA[
-        Simple <a href="https://visualvm.github.io/">VisualVM</a> integration plugin for IntelliJ IDEA.
-        <br/>
-        Enables launching and attaching VisualVM to a JVM application.
+        <a href="https://visualvm.github.io/">VisualVM</a> integration plugin for IntelliJ IDEA.
     ]]></description>
 
     <!-- Product and plugin compatibility requirements.
@@ -26,44 +24,44 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable parentId="tools"
-                                 id="com.github.aleksikangas.ideavisualvm.settings.VisualVmSettingsConfigurable"
-                                 instance="com.github.aleksikangas.ideavisualvm.settings.VisualVmSettingsConfigurable"
-                                 key="com.github.aleksikangas.ideavisualvm.settings.VisualVmSettings.displayName"
+                                 id="com.github.aleksikangas.visualvm.settings.VisualVmSettingsConfigurable"
+                                 instance="com.github.aleksikangas.visualvm.settings.VisualVmSettingsConfigurable"
+                                 key="com.github.aleksikangas.visualvm.settings.VisualVmSettings.displayName"
                                  bundle="messages.SettingsBundle"/>
-        <applicationService serviceImplementation="com.github.aleksikangas.ideavisualvm.settings.VisualVmSettings"/>
+        <applicationService serviceImplementation="com.github.aleksikangas.visualvm.settings.VisualVmSettings"/>
     </extensions>
 
     <resource-bundle>messages.ActionsBundle</resource-bundle>
 
     <actions>
-        <group id="com.github.aleksikangas.ideavisualvm.actions">
+        <group id="com.github.aleksikangas.visualvm.actions">
             <separator/>
-            <action id="com.github.aleksikangas.ideavisualvm.actions.AttachVisualVmAction"
-                    class="com.github.aleksikangas.ideavisualvm.actions.AttachVisualVmAction"
+            <action id="com.github.aleksikangas.visualvm.actions.AttachVisualVmAction"
+                    class="com.github.aleksikangas.visualvm.actions.AttachVisualVmAction"
                     icon="/icons/visualvm_16.svg">
             </action>
-            <action id="com.github.aleksikangas.ideavisualvm.actions.StartCpuSamplerVisualVmAction"
-                    class="com.github.aleksikangas.ideavisualvm.actions.StartCpuSamplerVisualVmAction"
+            <action id="com.github.aleksikangas.visualvm.actions.StartCpuSamplerVisualVmAction"
+                    class="com.github.aleksikangas.visualvm.actions.StartCpuSamplerVisualVmAction"
                     icon="/icons/visualvm_start_cpu_sampler_16.svg">
             </action>
-            <action id="com.github.aleksikangas.ideavisualvm.actions.StartMemorySamplerVisualVmAction"
-                    class="com.github.aleksikangas.ideavisualvm.actions.StartMemorySamplerVisualVmAction"
+            <action id="com.github.aleksikangas.visualvm.actions.StartMemorySamplerVisualVmAction"
+                    class="com.github.aleksikangas.visualvm.actions.StartMemorySamplerVisualVmAction"
                     icon="/icons/visualvm_start_memory_sampler_16.svg">
             </action>
-            <action id="com.github.aleksikangas.ideavisualvm.actions.SnapshotSamplerVisualVmAction"
-                    class="com.github.aleksikangas.ideavisualvm.actions.SnapshotSamplerVisualVmAction"
+            <action id="com.github.aleksikangas.visualvm.actions.SnapshotSamplerVisualVmAction"
+                    class="com.github.aleksikangas.visualvm.actions.SnapshotSamplerVisualVmAction"
                     icon="/icons/visualvm_snapshot_sampler_16.svg">
             </action>
-            <action id="com.github.aleksikangas.ideavisualvm.actions.StopSamplerVisualVmAction"
-                    class="com.github.aleksikangas.ideavisualvm.actions.StopSamplerVisualVmAction"
+            <action id="com.github.aleksikangas.visualvm.actions.StopSamplerVisualVmAction"
+                    class="com.github.aleksikangas.visualvm.actions.StopSamplerVisualVmAction"
                     icon="/icons/visualvm_stop_sampler_16.svg">
             </action>
             <separator/>
             <add-to-group group-id="RunTab.TopToolbar" anchor="last"/>
         </group>
 
-        <action id="com.github.aleksikangas.ideavisualvm.actions.LaunchVisualVmAction"
-                class="com.github.aleksikangas.ideavisualvm.actions.LaunchVisualVmAction"
+        <action id="com.github.aleksikangas.visualvm.actions.LaunchVisualVmAction"
+                class="com.github.aleksikangas.visualvm.actions.LaunchVisualVmAction"
                 icon="/icons/visualvm_16.svg">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
         </action>

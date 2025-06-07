@@ -1,7 +1,7 @@
-package com.github.aleksikangas.ideavisualvm.actions;
+package com.github.aleksikangas.visualvm.actions;
 
-import com.github.aleksikangas.ideavisualvm.visualvm.VisualVm;
-import com.github.aleksikangas.ideavisualvm.visualvm.VisualVmOptions;
+import com.github.aleksikangas.visualvm.integration.VisualVm;
+import com.github.aleksikangas.visualvm.integration.VisualVmOptions;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import org.jetbrains.annotations.NotNull;
 

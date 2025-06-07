@@ -1,1 +1,1 @@
-rootProject.name = "ideaVisualVM"
+rootProject.name = "VisualVMIntegration"

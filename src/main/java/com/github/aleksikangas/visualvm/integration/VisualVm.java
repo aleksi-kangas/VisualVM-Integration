@@ -1,4 +1,4 @@
-package com.github.aleksikangas.ideavisualvm.visualvm;
+package com.github.aleksikangas.visualvm.integration;
 
 public final class VisualVm {
   public static void launch(final VisualVmOptions visualVmOptions) {

@@ -1,4 +1,4 @@
-package com.github.aleksikangas.ideavisualvm.visualvm;
+package com.github.aleksikangas.visualvm.integration;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

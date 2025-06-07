@@ -1,4 +1,4 @@
-package com.github.aleksikangas.ideavisualvm.settings;
+package com.github.aleksikangas.visualvm.settings;
 
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
