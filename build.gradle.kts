@@ -44,6 +44,15 @@ tasks {
         sourceCompatibility = "21"
         targetCompatibility = "21"
     }
+    signPlugin {
+        certificateChainFile = file(providers.environmentVariable("CERTIFICATE_CHAIN_FILE"))
+        privateKeyFile = file(providers.environmentVariable("PRIVATE_KEY_FILE"))
+        password = providers.environmentVariable("PRIVATE_KEY_PASSWORD")
+    }
+
+    publishPlugin {
+        token = providers.systemProperty("PUBLISH_TOKEN")
+    }
 }
 
 kotlin {
