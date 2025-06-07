@@ -16,12 +16,12 @@
         <b><a href="https://visualvm.github.io/">VisualVM</a> integration plugin for IntelliJ IDEA.</b>
         <br/>
         <h2>Settings</h2>
-        The plugin settings can be found in the `File` > `Settings...` dialog under the `Tools` section.
+        The plugin settings can be found in the <i>File</i> -> <i>Settings</i> dialog under the <i>Tools</i> section.
         The path to the VisualVM executable is required. The other options are optional.
-        See the [VisualVM Command Line Options](https://visualvm.github.io/docs/command-line-options.html) for more information.
+        See the <a href="https://visualvm.github.io/docs/command-line-options.html">VisualVM Command Line Options> for more information.
         <h2>Usage</h2>
-        The integration plugin offers a `Run` > `VisualVM` menu item that can be used to launch VisualVM.
-        When an application is running, the `Run` menu bar offers the following VisualVM actions:
+        The integration plugin offers a <i>Run</i> -> <i>VisualVM</i> menu item that can be used to launch VisualVM.
+        When an application is running, the <i>Run</i> menu bar offers the following VisualVM actions:
         <ul>
             <li>Attach</li>
             <li>Thread Dump</li>
