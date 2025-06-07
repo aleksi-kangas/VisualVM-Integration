@@ -5,6 +5,7 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.ui.VerticalFlowLayout;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.components.JBCheckBox;
@@ -15,7 +16,7 @@ import com.intellij.util.ui.FormBuilder;
 import javax.swing.*;
 
 public final class VisualVmSettingsComponent {
-  private final JPanel mainPanel;
+  private final JPanel mainPanel = new JPanel();
 
   private final JBTextField executablePathField = new JBTextField();
   private final JButton executablePathBrowseButton = new JButton("Browse");
@@ -28,16 +29,20 @@ public final class VisualVmSettingsComponent {
   private final JBCheckBox windowToFrontCheckBox = new JBCheckBox();
 
   public VisualVmSettingsComponent() {
-    mainPanel = FormBuilder.createFormBuilder()
-                           .addLabeledComponent(new JBLabel("VisualVM executable:"), executablePathField)
-                           .addSeparator()
-                           .addComponentToRightColumn(executablePathBrowseButton)
-                           .addLabeledComponent(new JBLabel("Override JDK"), overrideJdkCheckBox)
-                           .addLabeledComponent(jdkHomeLabel, jdkHomePathTextField)
-                           .addComponentToRightColumn(jdkHomePathBrowseButton)
-                           .addSeparator()
-                           .addLabeledComponent(new JBLabel("Window to front:"), windowToFrontCheckBox)
-                           .getPanel();
+    mainPanel.setLayout(new VerticalFlowLayout());
+    final JPanel contentPanel = FormBuilder.createFormBuilder()
+                                           .addLabeledComponent(new JBLabel("VisualVM executable:"),
+                                                                executablePathField,
+                                                                0)
+                                           .addComponentToRightColumn(executablePathBrowseButton)
+                                           .addSeparator()
+                                           .addLabeledComponent(new JBLabel("Override JDK"), overrideJdkCheckBox)
+                                           .addLabeledComponent(jdkHomeLabel, jdkHomePathTextField)
+                                           .addComponentToRightColumn(jdkHomePathBrowseButton)
+                                           .addSeparator()
+                                           .addLabeledComponent(new JBLabel("Window to front:"), windowToFrontCheckBox)
+                                           .getPanel();
+    mainPanel.add(contentPanel);
 
     executablePathBrowseButton.addActionListener(e -> browseExecutablePath());
 
