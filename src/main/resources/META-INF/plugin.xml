@@ -41,6 +41,14 @@
                     class="com.github.aleksikangas.visualvm.actions.AttachVisualVmAction"
                     icon="/icons/visualvm_16.svg">
             </action>
+            <action id="com.github.aleksikangas.visualvm.actions.ThreadDumpVisualVmAction"
+                    class="com.github.aleksikangas.visualvm.actions.ThreadDumpVisualVmAction"
+                    icon="/icons/visualvm_thread_dump_16.svg">
+            </action>
+            <action id="com.github.aleksikangas.visualvm.actions.HeapDumpVisualVmAction"
+                    class="com.github.aleksikangas.visualvm.actions.HeapDumpVisualVmAction"
+                    icon="/icons/visualvm_heap_dump_16.svg">
+            </action>
             <action id="com.github.aleksikangas.visualvm.actions.StartCpuSamplerVisualVmAction"
                     class="com.github.aleksikangas.visualvm.actions.StartCpuSamplerVisualVmAction"
                     icon="/icons/visualvm_start_cpu_sampler_16.svg">
