@@ -34,6 +34,8 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
     public boolean overrideJdk = false;
     public String jdkHome = "";
     public boolean windowToFront = false;
+    public boolean overrideLaf = false;
+    public VisualVmLaf laf = VisualVmLaf.METAL;
 
     public boolean isValid() {
       return isExecutablePathValid() && isJdkHomeValid();

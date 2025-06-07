@@ -9,6 +9,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+/**
+ * Abstract class for actions that can be executed in the context of VisualVM.
+ */
 abstract class AbstractVisualVmAction extends AnAction {
   @Override
   public @NotNull ActionUpdateThread getActionUpdateThread() {
@@ -21,11 +24,15 @@ abstract class AbstractVisualVmAction extends AnAction {
     e.getPresentation().setEnabled(state.isValid());
   }
 
+  /**
+   * @return A preconfigured {@link VisualVmOptions.Builder} with the common settings applied.
+   */
   protected VisualVmOptions.Builder visualVmOptionsBuilder() {
     final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
     return new VisualVmOptions
             .Builder(state.executablePath)
             .withJdkHome(state.overrideJdk ? state.jdkHome : null)
-            .withWindowToFront(state.windowToFront ? true : null);
+            .withWindowToFront(state.windowToFront ? true : null)
+            .withLaf(state.overrideLaf ? state.laf : null);
   }
 }

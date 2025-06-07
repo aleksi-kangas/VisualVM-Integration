@@ -1,5 +1,6 @@
 package com.github.aleksikangas.visualvm.integration;
 
+import com.github.aleksikangas.visualvm.settings.VisualVmLaf;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +20,8 @@ public record VisualVmOptions(String executable,
                               Optional<Long> startMemorySamplerPid,
                               Optional<Long> snapshotSamplerPid,
                               Optional<Long> stopSamplerPid,
-                              Optional<Boolean> windowToFront) {
+                              Optional<Boolean> windowToFront,
+                              Optional<VisualVmLaf> laf) {
   public static final class Builder {
     @NotNull
     private final String executable;
@@ -45,6 +47,8 @@ public record VisualVmOptions(String executable,
     private Long stopSamplerPid = null;
     @Nullable
     private Boolean windowToFront = null;
+    @Nullable
+    private VisualVmLaf laf = null;
 
     public Builder(final @NotNull String executable) {
       this.executable = executable;
@@ -108,6 +112,11 @@ public record VisualVmOptions(String executable,
       this.windowToFront = windowToFront;
       return this;
     }
+
+    public Builder withLaf(@Nullable final VisualVmLaf laf) {
+      this.laf = laf;
+      return this;
+    }
   }
 
   private VisualVmOptions(final Builder builder) {
@@ -122,7 +131,8 @@ public record VisualVmOptions(String executable,
          Optional.ofNullable(builder.startMemorySamplerPid),
          Optional.ofNullable(builder.snapshotSamplerPid),
          Optional.ofNullable(builder.stopSamplerPid),
-         Optional.ofNullable(builder.windowToFront));
+         Optional.ofNullable(builder.windowToFront),
+         Optional.ofNullable(builder.laf));
   }
 
   // -------------------

@@ -8,6 +8,11 @@ import com.intellij.openapi.actionSystem.ExecutionDataKeys;
 
 import java.util.Optional;
 
+/**
+ * A PID aware VisualVM action.
+ * @implNote Relies on {@link ExecutionEnvironment#getContentToReuse()} to return a valid
+ *         {@link RunContentDescriptor}.
+ */
 abstract class AbstractPidAwareVisualVmAction extends AbstractVisualVmAction {
   protected final Optional<Long> getPid(final DataContext dataContext) {
     return Optional.ofNullable(dataContext.getData(ExecutionDataKeys.EXECUTION_ENVIRONMENT))

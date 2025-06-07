@@ -21,6 +21,10 @@ class VisualVmProcess implements Runnable {
     }
   }
 
+  /**
+   * Translates the {@link VisualVmProcess#options} to command line arguments.
+   * @return The list of arguments to be passed to the process.
+   */
   private List<String> buildCommandList() {
     final List<String> commandList = new ArrayList<>();
     commandList.add(options.executable());
@@ -65,6 +69,10 @@ class VisualVmProcess implements Runnable {
       commandList.add(String.valueOf(stopSamplerPid));
     });
     options.windowToFront().ifPresent(windowToFront -> commandList.add(VisualVmOptions.WINDOW_TO_FRONT));
+    options.laf().ifPresent(laf -> {
+      commandList.add(VisualVmOptions.LAF);
+      commandList.add(laf.toString());
+    });
     return commandList;
   }
 }

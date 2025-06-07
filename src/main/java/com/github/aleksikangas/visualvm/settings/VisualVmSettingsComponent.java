@@ -5,6 +5,7 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.VerticalFlowLayout;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -28,6 +29,9 @@ public final class VisualVmSettingsComponent {
 
   private final JBCheckBox windowToFrontCheckBox = new JBCheckBox();
 
+  private final JBCheckBox overrideLafCheckBox = new JBCheckBox();
+  private final ComboBox<VisualVmLaf> lafComboBox = new ComboBox<>(VisualVmLaf.values());
+
   public VisualVmSettingsComponent() {
     mainPanel.setLayout(new VerticalFlowLayout());
     final JPanel contentPanel = FormBuilder.createFormBuilder()
@@ -41,6 +45,9 @@ public final class VisualVmSettingsComponent {
                                            .addComponentToRightColumn(jdkHomePathBrowseButton)
                                            .addSeparator()
                                            .addLabeledComponent(new JBLabel("Window to front:"), windowToFrontCheckBox)
+                                           .addLabeledComponent(new JBLabel("Override look-and-feel:"),
+                                                                overrideLafCheckBox)
+                                           .addComponentToRightColumn(lafComboBox)
                                            .getPanel();
     mainPanel.add(contentPanel);
 
@@ -49,6 +56,10 @@ public final class VisualVmSettingsComponent {
     overrideJdkCheckBox.addActionListener(e -> enableJdkOverrideComponents(overrideJdkCheckBox.isSelected()));
     enableJdkOverrideComponents(overrideJdkCheckBox.isSelected());
     jdkHomePathBrowseButton.addActionListener(e -> browseJdkHomePath());
+
+    overrideLafCheckBox.addActionListener(e -> lafComboBox.setEnabled(overrideLafCheckBox.isSelected()));
+    lafComboBox.setSelectedItem(VisualVmLaf.METAL);
+    lafComboBox.setEnabled(overrideLafCheckBox.isSelected());
   }
 
   public JPanel getPanel() {
@@ -86,6 +97,23 @@ public final class VisualVmSettingsComponent {
 
   public void setWindowToFront(final boolean windowToFront) {
     windowToFrontCheckBox.setSelected(windowToFront);
+  }
+
+  public boolean overrideLaf() {
+    return overrideLafCheckBox.isSelected();
+  }
+
+  public void setOverrideLaf(final boolean overrideLaf) {
+    overrideLafCheckBox.setSelected(overrideLaf);
+    lafComboBox.setEnabled(overrideLafCheckBox.isSelected());
+  }
+
+  public VisualVmLaf getLaf() {
+    return (VisualVmLaf) lafComboBox.getSelectedItem();
+  }
+
+  public void setLaf(final VisualVmLaf laf) {
+    lafComboBox.setSelectedItem(laf);
   }
 
   private void browseExecutablePath() {
