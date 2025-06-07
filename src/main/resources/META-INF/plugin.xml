@@ -18,7 +18,7 @@
         <h2>Settings</h2>
         The plugin settings can be found in the <i>File</i> -> <i>Settings</i> dialog under the <i>Tools</i> section.
         The path to the VisualVM executable is required. The other options are optional.
-        See the <a href="https://visualvm.github.io/docs/command-line-options.html">VisualVM Command Line Options> for more information.
+        See the <a href="https://visualvm.github.io/docs/command-line-options.html">VisualVM Command Line Options</a> for more information.
         <h2>Usage</h2>
         The integration plugin offers a <i>Run</i> -> <i>VisualVM</i> menu item that can be used to launch VisualVM.
         When an application is running, the <i>Run</i> menu bar offers the following VisualVM actions:
