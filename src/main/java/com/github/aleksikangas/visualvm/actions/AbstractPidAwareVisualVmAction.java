@@ -1,5 +1,6 @@
 package com.github.aleksikangas.visualvm.actions;
 
+import com.github.aleksikangas.visualvm.notifications.VisualVmNotifications;
 import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.ui.RunContentDescriptor;
@@ -15,12 +16,16 @@ import java.util.Optional;
  */
 abstract class AbstractPidAwareVisualVmAction extends AbstractVisualVmAction {
   protected final Optional<Long> getPid(final DataContext dataContext) {
-    return Optional.ofNullable(dataContext.getData(ExecutionDataKeys.EXECUTION_ENVIRONMENT))
-                   .map(ExecutionEnvironment::getContentToReuse)
-                   .map(RunContentDescriptor::getProcessHandler)
-                   .filter(OSProcessHandler.class::isInstance)
-                   .map(OSProcessHandler.class::cast)
-                   .map(OSProcessHandler::getProcess)
-                   .map(Process::pid);
+    final Optional<Long> pid = Optional.ofNullable(dataContext.getData(ExecutionDataKeys.EXECUTION_ENVIRONMENT))
+                                       .map(ExecutionEnvironment::getContentToReuse)
+                                       .map(RunContentDescriptor::getProcessHandler)
+                                       .filter(OSProcessHandler.class::isInstance)
+                                       .map(OSProcessHandler.class::cast)
+                                       .map(OSProcessHandler::getProcess)
+                                       .map(Process::pid);
+    if (pid.isEmpty()) {
+      VisualVmNotifications.notifyError(null, "Could not find a valid PID from the current execution environment.");
+    }
+    return pid;
   }
 }

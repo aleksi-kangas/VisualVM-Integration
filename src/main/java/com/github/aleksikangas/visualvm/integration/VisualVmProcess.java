@@ -1,5 +1,7 @@
 package com.github.aleksikangas.visualvm.integration;
 
+import com.github.aleksikangas.visualvm.notifications.VisualVmNotifications;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ class VisualVmProcess implements Runnable {
     try {
       processBuilder.start();
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      VisualVmNotifications.notifyError(null, "Error starting VisualVM: " + e.getMessage());
     }
   }
 

@@ -40,6 +40,9 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java-capable</depends>
 
+    <resource-bundle>messages.ActionsBundle</resource-bundle>
+    <resource-bundle>messages.NotificationsBundle</resource-bundle>
+
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
@@ -49,9 +52,11 @@
                                  key="com.github.aleksikangas.visualvm.settings.VisualVmSettings.displayName"
                                  bundle="messages.SettingsBundle"/>
         <applicationService serviceImplementation="com.github.aleksikangas.visualvm.settings.VisualVmSettings"/>
+        <notificationGroup id="com.github.aleksikangas.visualvm.notifications"
+                           displayType="BALLOON"
+                           key="notification.com.github.aleksikangas.visualvm.notifications.group.name"
+                           bundle="messages.NotificationsBundle"/>
     </extensions>
-
-    <resource-bundle>messages.ActionsBundle</resource-bundle>
 
     <actions>
         <group id="com.github.aleksikangas.visualvm.actions">
