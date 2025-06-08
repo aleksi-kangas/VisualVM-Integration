@@ -40,9 +40,6 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java-capable</depends>
 
-    <resource-bundle>messages.ActionsBundle</resource-bundle>
-    <resource-bundle>messages.NotificationsBundle</resource-bundle>
-
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
@@ -58,7 +55,7 @@
                            bundle="messages.NotificationsBundle"/>
     </extensions>
 
-    <actions>
+    <actions resource-bundle="messages.ActionsBundle">
         <group id="com.github.aleksikangas.visualvm.actions">
             <separator/>
             <action id="com.github.aleksikangas.visualvm.actions.AttachVisualVmAction"
