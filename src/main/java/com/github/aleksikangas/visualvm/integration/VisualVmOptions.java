@@ -1,5 +1,6 @@
 package com.github.aleksikangas.visualvm.integration;
 
+import com.github.aleksikangas.visualvm.settings.VisualVmClassPaths;
 import com.github.aleksikangas.visualvm.settings.VisualVmLaf;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,7 +22,9 @@ public record VisualVmOptions(String executable,
                               Optional<Long> snapshotSamplerPid,
                               Optional<Long> stopSamplerPid,
                               Optional<Boolean> windowToFront,
-                              Optional<VisualVmLaf> laf) {
+                              Optional<VisualVmLaf> laf,
+                              Optional<VisualVmClassPaths> prependClassPath,
+                              Optional<VisualVmClassPaths> appendClassPath) {
   public static final class Builder {
     @NotNull
     private final String executable;
@@ -49,6 +52,10 @@ public record VisualVmOptions(String executable,
     private Boolean windowToFront = null;
     @Nullable
     private VisualVmLaf laf = null;
+    @Nullable
+    private VisualVmClassPaths prependClassPath = null;
+    @Nullable
+    private VisualVmClassPaths appendClassPath = null;
 
     public Builder(final @NotNull String executable) {
       this.executable = executable;
@@ -117,6 +124,16 @@ public record VisualVmOptions(String executable,
       this.laf = laf;
       return this;
     }
+
+    public Builder withPrependClassPath(@Nullable final VisualVmClassPaths prependClassPath) {
+      this.prependClassPath = prependClassPath;
+      return this;
+    }
+
+    public Builder withAppendClassPath(@Nullable final VisualVmClassPaths appendClassPath) {
+      this.appendClassPath = appendClassPath;
+      return this;
+    }
   }
 
   private VisualVmOptions(final Builder builder) {
@@ -132,7 +149,9 @@ public record VisualVmOptions(String executable,
          Optional.ofNullable(builder.snapshotSamplerPid),
          Optional.ofNullable(builder.stopSamplerPid),
          Optional.ofNullable(builder.windowToFront),
-         Optional.ofNullable(builder.laf));
+         Optional.ofNullable(builder.laf),
+         Optional.ofNullable(builder.prependClassPath),
+         Optional.ofNullable(builder.appendClassPath));
   }
 
   // -------------------

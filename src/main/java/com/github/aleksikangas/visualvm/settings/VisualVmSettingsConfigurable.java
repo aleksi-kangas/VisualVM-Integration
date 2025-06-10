@@ -32,8 +32,9 @@ public final class VisualVmSettingsConfigurable implements Configurable {
             || settingsComponent.overrideJdk() != state.overrideJdk
             || !Objects.equals(settingsComponent.getJdkHome(), state.jdkHome)
             || settingsComponent.windowToFront() != state.windowToFront
-            || settingsComponent.overrideLaf() != state.overrideLaf
-            || settingsComponent.getLaf() != state.laf;
+            || !Objects.equals(settingsComponent.getLaf(), state.laf)
+            || !Objects.equals(settingsComponent.getPrependClassPath(), state.prependClassPath)
+            || !Objects.equals(settingsComponent.getAppendClassPath(), state.appendClassPath);
   }
 
   @Override
@@ -44,8 +45,9 @@ public final class VisualVmSettingsConfigurable implements Configurable {
       state.overrideJdk = settingsComponent.overrideJdk();
       state.jdkHome = settingsComponent.getJdkHome();
       state.windowToFront = settingsComponent.windowToFront();
-      state.overrideLaf = settingsComponent.overrideLaf();
       state.laf = settingsComponent.getLaf();
+      state.prependClassPath = settingsComponent.getPrependClassPath();
+      state.appendClassPath = settingsComponent.getAppendClassPath();
     }
   }
 
@@ -57,8 +59,9 @@ public final class VisualVmSettingsConfigurable implements Configurable {
       settingsComponent.setOverrideJdk(state.overrideJdk);
       settingsComponent.setJdkHome(state.jdkHome);
       settingsComponent.setWindowToFront(state.windowToFront);
-      settingsComponent.setOverrideLaf(state.overrideLaf);
       settingsComponent.setLaf(state.laf);
+      settingsComponent.setPrependClassPath(state.prependClassPath);
+      settingsComponent.setAppendClassPath(state.appendClassPath);
     }
   }
 

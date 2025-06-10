@@ -1,6 +1,7 @@
 package com.github.aleksikangas.visualvm.actions;
 
 import com.github.aleksikangas.visualvm.integration.VisualVmOptions;
+import com.github.aleksikangas.visualvm.settings.VisualVmLaf;
 import com.github.aleksikangas.visualvm.settings.VisualVmSettings;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -33,6 +34,8 @@ abstract class AbstractVisualVmAction extends AnAction {
             .Builder(state.executablePath)
             .withJdkHome(state.overrideJdk ? state.jdkHome : null)
             .withWindowToFront(state.windowToFront ? true : null)
-            .withLaf(state.overrideLaf ? state.laf : null);
+            .withLaf(Objects.equals(state.laf, VisualVmLaf.NONE) ? null : state.laf)
+            .withPrependClassPath(state.prependClassPath.isEmpty() ? null : state.prependClassPath)
+            .withAppendClassPath(state.appendClassPath.isEmpty() ? null : state.appendClassPath);
   }
 }

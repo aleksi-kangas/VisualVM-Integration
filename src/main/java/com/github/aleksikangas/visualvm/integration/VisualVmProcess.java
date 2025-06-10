@@ -4,6 +4,7 @@ import com.github.aleksikangas.visualvm.notifications.VisualVmNotifications;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class VisualVmProcess implements Runnable {
@@ -75,6 +76,20 @@ class VisualVmProcess implements Runnable {
       commandList.add(VisualVmOptions.LAF);
       commandList.add(laf.toString());
     });
+    options.prependClassPath()
+           .ifPresent(prependClassPath -> Arrays
+                   .stream(prependClassPath.values())
+                   .forEach(classPath -> {
+                     commandList.add(VisualVmOptions.CP_P);
+                     commandList.add(classPath);
+                   }));
+    options.appendClassPath()
+           .ifPresent(appendClassPath -> Arrays
+                   .stream(appendClassPath.values())
+                   .forEach(classPath -> {
+                     commandList.add(VisualVmOptions.CP_A);
+                     commandList.add(classPath);
+                   }));
     return commandList;
   }
 }

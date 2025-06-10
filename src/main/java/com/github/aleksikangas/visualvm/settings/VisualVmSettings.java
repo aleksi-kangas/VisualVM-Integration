@@ -1,9 +1,12 @@
 package com.github.aleksikangas.visualvm.settings;
 
+import com.github.aleksikangas.visualvm.settings.converters.VisualVmClassPathConverter;
+import com.github.aleksikangas.visualvm.settings.converters.VisualVmLafConverter;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
+import com.intellij.util.xmlb.annotations.OptionTag;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.InvalidPathException;
@@ -34,8 +37,30 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
     public boolean overrideJdk = false;
     public String jdkHome = "";
     public boolean windowToFront = false;
-    public boolean overrideLaf = false;
-    public VisualVmLaf laf = VisualVmLaf.METAL;
+    @OptionTag(converter = VisualVmLafConverter.class)
+    public VisualVmLaf laf = VisualVmLaf.NONE;
+    @OptionTag(converter = VisualVmClassPathConverter.class)
+    public VisualVmClassPaths prependClassPath = VisualVmClassPaths.EMPTY;
+    @OptionTag(converter = VisualVmClassPathConverter.class)
+    public VisualVmClassPaths appendClassPath = VisualVmClassPaths.EMPTY;
+
+    @Override
+    public boolean equals(final Object o) {
+      if (o == null || getClass() != o.getClass()) return false;
+      final State state = (State) o;
+      return overrideJdk == state.overrideJdk
+              && windowToFront == state.windowToFront
+              && Objects.equals(executablePath, state.executablePath)
+              && Objects.equals(jdkHome, state.jdkHome)
+              && Objects.equals(laf, state.laf)
+              && Objects.equals(prependClassPath, state.prependClassPath)
+              && Objects.equals(appendClassPath, state.appendClassPath);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(executablePath, overrideJdk, jdkHome, windowToFront, laf, prependClassPath, appendClassPath);
+    }
 
     public boolean isValid() {
       return isExecutablePathValid() && isJdkHomeValid();

@@ -13,65 +13,74 @@ import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.util.ui.FormBuilder;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public final class VisualVmSettingsComponent {
   private final JPanel mainPanel = new JPanel();
 
+  // VisualVM executable
   private final JBTextField executablePathField = new JBTextField();
-  private final JButton executablePathBrowseButton = new JButton("Browse");
+  private final JButton executablePathBrowseButton = new JButton("Browse...");
 
+  // JDK home
   private final JBCheckBox overrideJdkCheckBox = new JBCheckBox();
   private final JBLabel jdkHomeLabel = new JBLabel("JDK home:");
   private final JBTextField jdkHomePathTextField = new JBTextField();
-  private final JButton jdkHomePathBrowseButton = new JButton("Browse");
+  private final JButton jdkHomePathBrowseButton = new JButton("Browse...");
 
+  // Appearance
   private final JBCheckBox windowToFrontCheckBox = new JBCheckBox();
+  private final ComboBox<VisualVmLaf.Variant> lafComboBox = new ComboBox<>(VisualVmLaf.Variant.values());
+  private final JBLabel customLafClassNameLabel = new JBLabel("Custom LAF:");
+  private final JBTextField customLafClassNameTextField = new JBTextField();
 
-  private final JBCheckBox overrideLafCheckBox = new JBCheckBox();
-  private final ComboBox<VisualVmLaf> lafComboBox = new ComboBox<>(VisualVmLaf.values());
+  // Classpath
+  private final JBTextField prependClassPathTextField = new JBTextField();
+  private final JBTextField appendClassPathTextField = new JBTextField();
 
   public VisualVmSettingsComponent() {
     mainPanel.setLayout(new VerticalFlowLayout());
-    final JPanel contentPanel = FormBuilder.createFormBuilder()
-                                           .addLabeledComponent(new JBLabel("VisualVM executable:"),
-                                                                executablePathField,
-                                                                0)
-                                           .addComponentToRightColumn(executablePathBrowseButton)
-                                           .addSeparator()
-                                           .addLabeledComponent(new JBLabel("Override JDK"), overrideJdkCheckBox)
-                                           .addLabeledComponent(jdkHomeLabel, jdkHomePathTextField)
-                                           .addComponentToRightColumn(jdkHomePathBrowseButton)
-                                           .addSeparator()
-                                           .addLabeledComponent(new JBLabel("Window to front:"), windowToFrontCheckBox)
-                                           .addLabeledComponent(new JBLabel("Override look-and-feel:"),
-                                                                overrideLafCheckBox)
-                                           .addComponentToRightColumn(lafComboBox)
-                                           .getPanel();
+
+    final JPanel contentPanel = FormBuilder
+            .createFormBuilder()
+            .addLabeledComponent(new JBLabel("VisualVM executable:"), executablePathField)
+            .addComponentToRightColumn(executablePathBrowseButton)
+            .addSeparator()
+            .addLabeledComponent(new JBLabel("Override JDK"), overrideJdkCheckBox)
+            .addLabeledComponent(jdkHomeLabel, jdkHomePathTextField)
+            .addComponentToRightColumn(jdkHomePathBrowseButton)
+            .addSeparator()
+            .addLabeledComponent(new JBLabel("Window to front:"), windowToFrontCheckBox)
+            .addLabeledComponent(new JBLabel("Override LAF:"), lafComboBox)
+            .addLabeledComponent(customLafClassNameLabel, customLafClassNameTextField)
+            .addSeparator()
+            .addLabeledComponent(new JBLabel("Prepend classpath:"), prependClassPathTextField)
+            .addLabeledComponent(new JBLabel("Append classpath:"), appendClassPathTextField)
+            .getPanel();
     mainPanel.add(contentPanel);
 
-    executablePathBrowseButton.addActionListener(e -> browseExecutablePath());
-
-    overrideJdkCheckBox.addActionListener(e -> enableJdkOverrideComponents(overrideJdkCheckBox.isSelected()));
-    enableJdkOverrideComponents(overrideJdkCheckBox.isSelected());
-    jdkHomePathBrowseButton.addActionListener(e -> browseJdkHomePath());
-
-    overrideLafCheckBox.addActionListener(e -> lafComboBox.setEnabled(overrideLafCheckBox.isSelected()));
-    lafComboBox.setSelectedItem(VisualVmLaf.METAL);
-    lafComboBox.setEnabled(overrideLafCheckBox.isSelected());
+    initializeExecutablePath();
+    initializeJdKHome();
+    initializeAppearance();
+    initializeClassPaths();
   }
 
+  @NotNull
   public JPanel getPanel() {
     return mainPanel;
   }
 
+  @NotNull
   public String getExecutablePath() {
     return executablePathField.getText();
   }
 
-  public void setExecutablePath(final String executablePath) {
-    executablePathField.setText(executablePath);
+  public void setExecutablePath(@NotNull final String executablePath) {
+    executablePathField.setText(Objects.requireNonNull(executablePath));
   }
 
   public boolean overrideJdk() {
@@ -83,6 +92,7 @@ public final class VisualVmSettingsComponent {
     enableJdkOverrideComponents(overrideJdkCheckBox.isSelected());
   }
 
+  @NotNull
   public String getJdkHome() {
     return jdkHomePathTextField.getText();
   }
@@ -99,21 +109,50 @@ public final class VisualVmSettingsComponent {
     windowToFrontCheckBox.setSelected(windowToFront);
   }
 
-  public boolean overrideLaf() {
-    return overrideLafCheckBox.isSelected();
-  }
-
-  public void setOverrideLaf(final boolean overrideLaf) {
-    overrideLafCheckBox.setSelected(overrideLaf);
-    lafComboBox.setEnabled(overrideLafCheckBox.isSelected());
-  }
-
+  @NotNull
   public VisualVmLaf getLaf() {
-    return (VisualVmLaf) lafComboBox.getSelectedItem();
+    return switch ((VisualVmLaf.Variant) Objects.requireNonNull(lafComboBox.getSelectedItem())) {
+      case NONE -> VisualVmLaf.NONE;
+      case AQUA -> VisualVmLaf.AQUA;
+      case GTK -> VisualVmLaf.GTK;
+      case METAL -> VisualVmLaf.METAL;
+      case WINDOWS -> VisualVmLaf.WINDOWS;
+      case CUSTOM -> VisualVmLaf.custom(customLafClassNameTextField.getText());
+    };
   }
 
-  public void setLaf(final VisualVmLaf laf) {
-    lafComboBox.setSelectedItem(laf);
+  public void setLaf(@Nullable final VisualVmLaf laf) {
+    if (laf != null) {
+      customLafClassNameTextField.setText(laf.isCustom() ? laf.toString() : "");
+      lafComboBox.setSelectedItem(laf.variant());
+      enableCustomLafComponents(laf.isCustom());
+    } else {
+      customLafClassNameTextField.setText("");
+      lafComboBox.setSelectedItem(VisualVmLaf.Variant.NONE);
+      enableCustomLafComponents(false);
+    }
+  }
+
+  public VisualVmClassPaths getPrependClassPath() {
+    if (prependClassPathTextField.getText().isEmpty()) {
+      return VisualVmClassPaths.EMPTY;
+    }
+    return VisualVmClassPaths.ofCommaSeparated(prependClassPathTextField.getText());
+  }
+
+  public void setPrependClassPath(@NotNull final VisualVmClassPaths prependClassPath) {
+    prependClassPathTextField.setText(Objects.requireNonNull(prependClassPath).toString());
+  }
+
+  public VisualVmClassPaths getAppendClassPath() {
+    if (appendClassPathTextField.getText().isEmpty()) {
+      return VisualVmClassPaths.EMPTY;
+    }
+    return VisualVmClassPaths.ofCommaSeparated(appendClassPathTextField.getText());
+  }
+
+  public void setAppendClassPath(@NotNull final VisualVmClassPaths appendClassPath) {
+    appendClassPathTextField.setText(Objects.requireNonNull(appendClassPath).toString());
   }
 
   private void browseExecutablePath() {
@@ -142,5 +181,41 @@ public final class VisualVmSettingsComponent {
     if (chosenFile != null) {
       jdkHomePathTextField.setText(chosenFile.getPath());
     }
+  }
+
+  private void enableCustomLafComponents(final boolean enabled) {
+    customLafClassNameLabel.setEnabled(enabled);
+    customLafClassNameTextField.setEnabled(enabled);
+  }
+
+  private void initializeExecutablePath() {
+    executablePathField.setToolTipText("Path to the VisualVM executable");
+    executablePathBrowseButton.addActionListener(e -> browseExecutablePath());
+  }
+
+  private void initializeJdKHome() {
+    overrideJdkCheckBox.addActionListener(e -> enableJdkOverrideComponents(overrideJdkCheckBox.isSelected()));
+    enableJdkOverrideComponents(overrideJdkCheckBox.isSelected());
+    jdkHomePathBrowseButton.addActionListener(e -> browseJdkHomePath());
+    overrideJdkCheckBox.setToolTipText("(--jdkhome): Path to the JDK home");
+    jdkHomePathTextField.setToolTipText("(--jdkhome): Path to the JDK home");
+  }
+
+  private void initializeAppearance() {
+    windowToFrontCheckBox.setToolTipText("(--window-to-front): Brings VisualVM window to front if supported by the OS");
+    lafComboBox.setToolTipText("(--laf): Override LAF (Look-and-Feel) with a predefined/custom LAF");
+    lafComboBox.addActionListener(e -> {
+      final VisualVmLaf.Variant lafVariant = (VisualVmLaf.Variant) Objects.requireNonNull(lafComboBox.getSelectedItem());
+      enableCustomLafComponents(lafVariant == VisualVmLaf.Variant.CUSTOM);
+    });
+    customLafClassNameTextField.setToolTipText("Custom LAF class");
+    enableCustomLafComponents(false);
+  }
+
+  private void initializeClassPaths() {
+    prependClassPathTextField.setToolTipText(
+            "(--cp:p): Prepend custom (comma-separated) classpath(s) to the VisualVM classpath");
+    appendClassPathTextField.setToolTipText(
+            "(--cp:a): Append custom (comma-separated) classpath(s) to the VisualVM classpath");
   }
 }
