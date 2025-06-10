@@ -20,19 +20,19 @@ When an application is running, the `Run` menu bar offers the following VisualVM
 
 ![RunMenuBar](run-menu-bar.png)
 
-- Attach
+- Attach ![](src/main/resources/icons/visualvm_16.svg)
     - Attaching to the running process, i.e. opening the process view in VisualVM
-- Thread Dump
+- Thread Dump ![](src/main/resources/icons/visualvm_thread_dump_16_dark.svg)
     - Takes a thread dump and opens it in VisualVM
-- Heap Dump
+- Heap Dump ![](src/main/resources/icons/visualvm_heap_dump_16_dark.svg)
     - Takes a heap dump and opens it in VisualVM
-- Start CPU Sampler
+- Start CPU Sampler ![](src/main/resources/icons/visualvm_start_cpu_sampler_16_dark.svg)
     - Starts CPU sampling
-- Start Memory Sampler
+- Start Memory Sampler ![](src/main/resources/icons/visualvm_start_memory_sampler_16_dark.svg)
     - Starts memory sampling
-- Sampler Snapshot
+- Sampler Snapshot ![](src/main/resources/icons/visualvm_snapshot_sampler_16_dark.svg)
     - Takes a sampler snapshot and opens it in VisualVM
-- Stop Sampler
+- Stop Sampler ![](src/main/resources/icons/visualvm_stop_sampler_16_dark.svg)
     - Stops sampling
 
 The actions may also be manually added to e.g. debugger menu bar, if so desired.
