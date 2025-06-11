@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public final class ThreadDumpVisualVmAction extends AbstractPidAwareVisualVmAction {
   @Override
   public void actionPerformed(@NotNull final AnActionEvent e) {
-    getPid(e.getDataContext()).ifPresent(pid -> {
+    selectPid(e).thenAccept(pid -> {
       final var visualVmOptions = visualVmOptionsBuilder().withThreadDumpPid(pid)
                                                           .build();
       VisualVm.launch(visualVmOptions);

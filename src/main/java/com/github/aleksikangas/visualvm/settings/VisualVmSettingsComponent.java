@@ -22,9 +22,10 @@ import java.util.Objects;
 public final class VisualVmSettingsComponent {
   private final JPanel mainPanel = new JPanel();
 
-  // VisualVM executable
+  // General
   private final JBTextField executablePathField = new JBTextField();
   private final JButton executablePathBrowseButton = new JButton("Browse...");
+  private final JBCheckBox automaticPidSelectionCheckBox = new JBCheckBox();
 
   // JDK home
   private final JBCheckBox overrideJdkCheckBox = new JBCheckBox();
@@ -49,8 +50,9 @@ public final class VisualVmSettingsComponent {
             .createFormBuilder()
             .addLabeledComponent(new JBLabel("VisualVM executable:"), executablePathField)
             .addComponentToRightColumn(executablePathBrowseButton)
+            .addLabeledComponent(new JBLabel("Automatic PID selection:"), automaticPidSelectionCheckBox)
             .addSeparator()
-            .addLabeledComponent(new JBLabel("Override JDK"), overrideJdkCheckBox)
+            .addLabeledComponent(new JBLabel("Override JDK:"), overrideJdkCheckBox)
             .addLabeledComponent(jdkHomeLabel, jdkHomePathTextField)
             .addComponentToRightColumn(jdkHomePathBrowseButton)
             .addSeparator()
@@ -81,6 +83,14 @@ public final class VisualVmSettingsComponent {
 
   public void setExecutablePath(@NotNull final String executablePath) {
     executablePathField.setText(Objects.requireNonNull(executablePath));
+  }
+
+  public boolean getAutomaticPidSelection() {
+    return automaticPidSelectionCheckBox.isSelected();
+  }
+
+  public void setAutomaticPidSelection(final boolean automaticPidSelection) {
+    automaticPidSelectionCheckBox.setSelected(automaticPidSelection);
   }
 
   public boolean overrideJdk() {

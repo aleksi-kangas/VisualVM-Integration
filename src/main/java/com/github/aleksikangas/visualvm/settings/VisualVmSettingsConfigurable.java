@@ -29,6 +29,7 @@ public final class VisualVmSettingsConfigurable implements Configurable {
     if (settingsComponent == null) return false;
     final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
     return !Objects.equals(settingsComponent.getExecutablePath(), state.executablePath)
+            || settingsComponent.getAutomaticPidSelection() != state.automaticPidSelection
             || settingsComponent.overrideJdk() != state.overrideJdk
             || !Objects.equals(settingsComponent.getJdkHome(), state.jdkHome)
             || settingsComponent.windowToFront() != state.windowToFront
@@ -42,6 +43,7 @@ public final class VisualVmSettingsConfigurable implements Configurable {
     if (settingsComponent != null) {
       final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
       state.executablePath = settingsComponent.getExecutablePath();
+      state.automaticPidSelection = settingsComponent.getAutomaticPidSelection();
       state.overrideJdk = settingsComponent.overrideJdk();
       state.jdkHome = settingsComponent.getJdkHome();
       state.windowToFront = settingsComponent.windowToFront();
@@ -56,6 +58,7 @@ public final class VisualVmSettingsConfigurable implements Configurable {
     if (settingsComponent != null) {
       final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
       settingsComponent.setExecutablePath(state.executablePath);
+      settingsComponent.setAutomaticPidSelection(state.automaticPidSelection);
       settingsComponent.setOverrideJdk(state.overrideJdk);
       settingsComponent.setJdkHome(state.jdkHome);
       settingsComponent.setWindowToFront(state.windowToFront);

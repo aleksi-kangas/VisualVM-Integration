@@ -34,6 +34,7 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
 
   public static final class State {
     public String executablePath = "";
+    public boolean automaticPidSelection = true;
     public boolean overrideJdk = false;
     public String jdkHome = "";
     public boolean windowToFront = false;
@@ -48,7 +49,8 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
     public boolean equals(final Object o) {
       if (o == null || getClass() != o.getClass()) return false;
       final State state = (State) o;
-      return overrideJdk == state.overrideJdk
+      return automaticPidSelection == state.automaticPidSelection
+              && overrideJdk == state.overrideJdk
               && windowToFront == state.windowToFront
               && Objects.equals(executablePath, state.executablePath)
               && Objects.equals(jdkHome, state.jdkHome)
@@ -59,7 +61,14 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
 
     @Override
     public int hashCode() {
-      return Objects.hash(executablePath, overrideJdk, jdkHome, windowToFront, laf, prependClassPath, appendClassPath);
+      return Objects.hash(executablePath,
+                          automaticPidSelection,
+                          overrideJdk,
+                          jdkHome,
+                          windowToFront,
+                          laf,
+                          prependClassPath,
+                          appendClassPath);
     }
 
     public boolean isValid() {
