@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.aleksi-kangas"
-version = "0.2.0"
+version = "0.2.1"
 
 repositories {
     mavenCentral()
@@ -33,7 +33,7 @@ intellijPlatform {
         }
 
         changeNotes = """
-            Initial version
+            VisualVM integration with automatic PID selection.
         """.trimIndent()
     }
 }

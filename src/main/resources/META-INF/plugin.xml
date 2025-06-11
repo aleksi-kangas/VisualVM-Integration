@@ -33,6 +33,7 @@
         </ul>
         The actions may also be manually added to e.g. debugger menu bar, if so desired.
         The only requirement is that the PID (process ID) is resolvable from the context.
+        Automatic PID selection may be turned off in the plugin settings.
     ]]></description>
 
     <!-- Product and plugin compatibility requirements.

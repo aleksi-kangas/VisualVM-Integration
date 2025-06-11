@@ -37,3 +37,7 @@ When an application is running, the `Run` menu bar offers the following VisualVM
 
 The actions may also be manually added to e.g. debugger menu bar, if so desired.
 The only requirement is that the PID (process ID) is resolvable from the context.
+Automatic PID selection may be turned off in the plugin settings,
+and in such a case a popup menu for PID selection is displayed.
+
+![ManualPIDSelection](manual-pid-selection.png)
