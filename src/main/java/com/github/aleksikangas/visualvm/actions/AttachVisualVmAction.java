@@ -8,8 +8,8 @@ public final class AttachVisualVmAction extends AbstractPidAwareVisualVmAction {
   @Override
   public void actionPerformed(@NotNull final AnActionEvent e) {
     selectPid(e).thenAccept(pid -> {
-      final var visualVmOptions = visualVmOptionsBuilder().withOpenPid(pid)
-                                                          .build();
+      final var visualVmOptions = visualVmOptionsBuilder(e).withOpenPid(pid)
+                                                           .build();
       VisualVm.launch(visualVmOptions);
     });
   }

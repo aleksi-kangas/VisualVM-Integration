@@ -8,8 +8,8 @@ public final class StartMemorySamplerVisualVmAction extends AbstractPidAwareVisu
   @Override
   public void actionPerformed(@NotNull final AnActionEvent e) {
     selectPid(e).thenAccept(pid -> {
-      final var visualVmOptions = visualVmOptionsBuilder().withStartMemorySamplerPid(pid)
-                                                          .build();
+      final var visualVmOptions = visualVmOptionsBuilder(e).withStartMemorySamplerPid(pid)
+                                                           .build();
       VisualVm.launch(visualVmOptions);
     });
   }

@@ -8,8 +8,8 @@ public final class StopSamplerVisualVmAction extends AbstractPidAwareVisualVmAct
   @Override
   public void actionPerformed(@NotNull final AnActionEvent e) {
     selectPid(e).thenAccept(pid -> {
-      final var visualVmOptions = visualVmOptionsBuilder().withStopSamplerPid(pid)
-                                                          .build();
+      final var visualVmOptions = visualVmOptionsBuilder(e).withStopSamplerPid(pid)
+                                                           .build();
       VisualVm.launch(visualVmOptions);
     });
   }

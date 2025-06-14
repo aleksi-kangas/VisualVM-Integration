@@ -8,8 +8,8 @@ public final class SnapshotSamplerVisualVmAction extends AbstractPidAwareVisualV
   @Override
   public void actionPerformed(@NotNull final AnActionEvent e) {
     selectPid(e).thenAccept(pid -> {
-      final var visualVmOptions = visualVmOptionsBuilder().withSnapshotSamplerPid(pid)
-                                                          .build();
+      final var visualVmOptions = visualVmOptionsBuilder(e).withSnapshotSamplerPid(pid)
+                                                           .build();
       VisualVm.launch(visualVmOptions);
     });
   }

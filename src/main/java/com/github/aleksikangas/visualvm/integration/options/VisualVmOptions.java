@@ -9,6 +9,8 @@ import java.util.Optional;
  * <a href="https://visualvm.github.io/docs/command-line-options.html">VisualVM Command Line Options</a>
  */
 public record VisualVmOptions(String executable,
+                              Optional<VisualVmSourceViewer> sourceViewer,
+                              Optional<VisualVmSourceRoots> sourceRoots,
                               Optional<String> jdkHome,
                               Optional<String> openFile,
                               Optional<Long> openPid,
@@ -26,6 +28,10 @@ public record VisualVmOptions(String executable,
   public static final class Builder {
     @NotNull
     private final String executable;
+    @Nullable
+    private VisualVmSourceViewer sourceViewer = null;
+    @Nullable
+    private VisualVmSourceRoots sourceRoots = null;
     @Nullable
     private String jdkHome = null;
     @Nullable
@@ -61,6 +67,16 @@ public record VisualVmOptions(String executable,
 
     public VisualVmOptions build() {
       return new VisualVmOptions(this);
+    }
+
+    public Builder withSourceViewer(@Nullable final VisualVmSourceViewer sourceViewer) {
+      this.sourceViewer = sourceViewer;
+      return this;
+    }
+
+    public Builder withSourceRoots(@Nullable final VisualVmSourceRoots sourceRoots) {
+      this.sourceRoots = sourceRoots;
+      return this;
     }
 
     public Builder withJdkHome(@Nullable final String jdkHome) {
@@ -136,6 +152,8 @@ public record VisualVmOptions(String executable,
 
   private VisualVmOptions(final Builder builder) {
     this(builder.executable,
+         Optional.ofNullable(builder.sourceViewer),
+         Optional.ofNullable(builder.sourceRoots),
          Optional.ofNullable(builder.jdkHome),
          Optional.ofNullable(builder.openFile),
          Optional.ofNullable(builder.openPid),

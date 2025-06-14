@@ -8,8 +8,8 @@ public final class HeapDumpVisualVmAction extends AbstractPidAwareVisualVmAction
   @Override
   public void actionPerformed(@NotNull final AnActionEvent e) {
     selectPid(e).thenAccept(pid -> {
-      final var visualVmOptions = visualVmOptionsBuilder().withHeapDumpPid(pid)
-                                                          .build();
+      final var visualVmOptions = visualVmOptionsBuilder(e).withHeapDumpPid(pid)
+                                                           .build();
       VisualVm.launch(visualVmOptions);
     });
   }

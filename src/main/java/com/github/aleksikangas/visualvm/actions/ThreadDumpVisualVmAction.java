@@ -8,8 +8,8 @@ public final class ThreadDumpVisualVmAction extends AbstractPidAwareVisualVmActi
   @Override
   public void actionPerformed(@NotNull final AnActionEvent e) {
     selectPid(e).thenAccept(pid -> {
-      final var visualVmOptions = visualVmOptionsBuilder().withThreadDumpPid(pid)
-                                                          .build();
+      final var visualVmOptions = visualVmOptionsBuilder(e).withThreadDumpPid(pid)
+                                                           .build();
       VisualVm.launch(visualVmOptions);
     });
   }

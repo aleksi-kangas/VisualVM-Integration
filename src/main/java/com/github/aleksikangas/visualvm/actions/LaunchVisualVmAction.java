@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public final class LaunchVisualVmAction extends AbstractVisualVmAction {
   @Override
   public void actionPerformed(@NotNull final AnActionEvent e) {
-    final VisualVmOptions visualVmOptions = visualVmOptionsBuilder().build();
+    final VisualVmOptions visualVmOptions = visualVmOptionsBuilder(e).build();
     VisualVm.launch(visualVmOptions);
   }
 }

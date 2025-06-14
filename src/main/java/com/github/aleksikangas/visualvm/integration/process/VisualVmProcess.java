@@ -32,6 +32,14 @@ class VisualVmProcess implements Runnable {
   private List<String> buildCommandList() {
     final List<String> commandList = new ArrayList<>();
     commandList.add(options.executable());
+    options.sourceRoots().ifPresent(sourceRoots -> {
+      commandList.add(VisualVmCommandLineOptions.SOURCE_ROOTS.toString());
+      commandList.add(sourceRoots.toString());
+    });
+    options.sourceViewer().ifPresent(sourceViewer -> {
+      commandList.add(VisualVmCommandLineOptions.SOURCE_VIEWER.toString());
+      commandList.add(sourceViewer.toString());
+    });
     options.jdkHome().ifPresent(jdkHome -> {
       commandList.add(VisualVmCommandLineOptions.JDK_HOME.toString());
       commandList.add(jdkHome);

@@ -8,8 +8,8 @@ public final class StartCpuSamplerVisualVmAction extends AbstractPidAwareVisualV
   @Override
   public void actionPerformed(@NotNull final AnActionEvent e) {
     selectPid(e).thenAccept(pid -> {
-      final var visualVmOptions = visualVmOptionsBuilder().withStartCpuSamplerPid(pid)
-                                                          .build();
+      final var visualVmOptions = visualVmOptionsBuilder(e).withStartCpuSamplerPid(pid)
+                                                           .build();
       VisualVm.launch(visualVmOptions);
     });
   }
