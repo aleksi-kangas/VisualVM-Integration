@@ -11,6 +11,7 @@ import java.util.Optional;
 public record VisualVmOptions(String executable,
                               Optional<VisualVmSourceViewer> sourceViewer,
                               Optional<VisualVmSourceRoots> sourceRoots,
+                              Optional<VisualVmSourceConfig> sourceConfig,
                               Optional<String> jdkHome,
                               Optional<String> openFile,
                               Optional<Long> openPid,
@@ -32,6 +33,8 @@ public record VisualVmOptions(String executable,
     private VisualVmSourceViewer sourceViewer = null;
     @Nullable
     private VisualVmSourceRoots sourceRoots = null;
+    @Nullable
+    private VisualVmSourceConfig sourceConfig = null;
     @Nullable
     private String jdkHome = null;
     @Nullable
@@ -76,6 +79,11 @@ public record VisualVmOptions(String executable,
 
     public Builder withSourceRoots(@Nullable final VisualVmSourceRoots sourceRoots) {
       this.sourceRoots = sourceRoots;
+      return this;
+    }
+
+    public Builder withSourceConfig(@Nullable final VisualVmSourceConfig sourceConfig) {
+      this.sourceConfig = sourceConfig;
       return this;
     }
 
@@ -154,6 +162,7 @@ public record VisualVmOptions(String executable,
     this(builder.executable,
          Optional.ofNullable(builder.sourceViewer),
          Optional.ofNullable(builder.sourceRoots),
+         Optional.ofNullable(builder.sourceConfig),
          Optional.ofNullable(builder.jdkHome),
          Optional.ofNullable(builder.openFile),
          Optional.ofNullable(builder.openPid),

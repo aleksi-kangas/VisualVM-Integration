@@ -40,6 +40,10 @@ class VisualVmProcess implements Runnable {
       commandList.add(VisualVmCommandLineOptions.SOURCE_VIEWER.toString());
       commandList.add(sourceViewer.toString());
     });
+    options.sourceConfig().ifPresent(sourceConfig -> {
+      commandList.add(VisualVmCommandLineOptions.SOURCE_CONFIG.toString());
+      commandList.add(sourceConfig.getSourceConfigPath().toString());
+    });
     options.jdkHome().ifPresent(jdkHome -> {
       commandList.add(VisualVmCommandLineOptions.JDK_HOME.toString());
       commandList.add(jdkHome);

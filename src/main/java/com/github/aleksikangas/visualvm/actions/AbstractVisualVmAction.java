@@ -2,8 +2,7 @@ package com.github.aleksikangas.visualvm.actions;
 
 import com.github.aleksikangas.visualvm.integration.options.VisualVmLaf;
 import com.github.aleksikangas.visualvm.integration.options.VisualVmOptions;
-import com.github.aleksikangas.visualvm.integration.options.VisualVmSourceRoots;
-import com.github.aleksikangas.visualvm.integration.options.VisualVmSourceViewer;
+import com.github.aleksikangas.visualvm.integration.options.VisualVmSourceConfig;
 import com.github.aleksikangas.visualvm.settings.VisualVmSettings;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -34,8 +33,7 @@ abstract class AbstractVisualVmAction extends AnAction {
     final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
     return new VisualVmOptions
             .Builder(state.executablePath)
-            .withSourceViewer(VisualVmSourceViewer.resolve().orElse(null))
-            .withSourceRoots(VisualVmSourceRoots.parse(e.getProject()))
+            .withSourceConfig(VisualVmSourceConfig.resolve(e.getProject()).orElse(null))
             .withJdkHome(state.overrideJdk ? state.jdkHome : null)
             .withWindowToFront(state.windowToFront ? true : null)
             .withLaf(Objects.equals(state.laf, VisualVmLaf.NONE) ? null : state.laf)

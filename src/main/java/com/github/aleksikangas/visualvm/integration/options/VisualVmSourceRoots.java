@@ -8,16 +8,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class VisualVmSourceRoots {
   private final Set<VirtualFile> sourceRoots;
 
-  public static VisualVmSourceRoots parse(@Nullable final Project project) {
+  public static Optional<VisualVmSourceRoots> resolve(@Nullable final Project project) {
     if (project == null) {
-      return new VisualVmSourceRoots(new HashSet<>());
+      return Optional.empty();
     }
     final Set<VirtualFile> sourceRoots = new HashSet<>();
     final var moduleManager = ModuleManager.getInstance(project);
@@ -25,7 +23,7 @@ public class VisualVmSourceRoots {
       final var moduleRootManager = ModuleRootManager.getInstance(module);
       sourceRoots.addAll(List.of(moduleRootManager.getSourceRoots(false)));
     }
-    return new VisualVmSourceRoots(sourceRoots);
+    return Optional.of(new VisualVmSourceRoots(sourceRoots));
   }
 
   @Override
@@ -39,6 +37,10 @@ public class VisualVmSourceRoots {
       stringBuilder.deleteCharAt(stringBuilder.length() - 1);  // Remove the last path separator
     }
     return stringBuilder.toString();
+  }
+
+  public Set<VirtualFile> getAll() {
+    return Collections.unmodifiableSet(sourceRoots);
   }
 
   private VisualVmSourceRoots(@NotNull final Set<VirtualFile> sourceRoots) {
