@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.aleksi-kangas"
-version = "0.2.1"
+version = "0.3.0"
 
 repositories {
     mavenCentral()
@@ -33,7 +33,7 @@ intellijPlatform {
         }
 
         changeNotes = """
-            VisualVM integration with automatic PID selection.
+            VisualVM integration with automatic PID selection and resolving of source roots.
         """.trimIndent()
     }
 }
