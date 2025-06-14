@@ -20,7 +20,7 @@ public final class ProcessUtils {
   public static List<JpsProcess> listJpsProcesses() {
     final List<JpsProcess> jpsProcesses = new ArrayList<>();
     try {
-      final Process jpsProcess = Runtime.getRuntime().exec(new String[]{"jps"});
+      final Process jpsProcess = Runtime.getRuntime().exec(new String[]{"jps", "-l"});
       try (final var bufferedReader = new BufferedReader(new InputStreamReader(jpsProcess.getInputStream()))) {
         String line;
         while ((line = bufferedReader.readLine()) != null) {
