@@ -14,20 +14,38 @@ import java.util.Optional;
 import java.util.Properties;
 
 public class VisualVmSourceConfig {
+  public enum Parameters {
+    NONE,
+    SOURCE_ROOTS,
+    SOURCE_VIEWER,
+    BOTH
+  }
+
+  private static final String SOURCE_CONFIG_FILENAME_PREFIX = "visualvm-source-config";
+  private static final String SOURCE_CONFIG_FILENAME_SUFFIX = ".properties";
+  private static final String SOURCE_ROOTS_PROPERTY = "source-roots";
+  private static final String SOURCE_VIEWER_PROPERTY = "source-viewer";
+
   private final Path sourceConfigPath;
 
-  public static Optional<VisualVmSourceConfig> resolve(@Nullable final Project project) {
+  public static Optional<VisualVmSourceConfig> resolve(@Nullable final Project project, final Parameters parameters) {
+    if (parameters == Parameters.NONE)
+      return Optional.empty();
     try {
-      final File tempFile = FileUtil.createTempFile("visualvm-source-config", ".properties");
+      final File tempFile = FileUtil.createTempFile(SOURCE_CONFIG_FILENAME_PREFIX, SOURCE_CONFIG_FILENAME_SUFFIX);
       final Properties sourceProperties = new Properties();
-      VisualVmSourceRoots.resolve(project)
-                         .ifPresent(sourceRoots -> {
-                           sourceProperties.setProperty("source-roots", sourceRoots.toString());
-                         });
-      VisualVmSourceViewer.resolve()
-                          .ifPresent(sourceViewer -> {
-                            sourceProperties.setProperty("source-viewer", sourceViewer.toString());
-                          });
+
+      if (parameters == Parameters.BOTH || parameters == Parameters.SOURCE_ROOTS) {
+        VisualVmSourceRoots.resolve(project)
+                           .ifPresent(sourceRoots -> sourceProperties
+                                   .setProperty(SOURCE_ROOTS_PROPERTY, sourceRoots.toString()));
+      }
+      if (parameters == Parameters.BOTH || parameters == Parameters.SOURCE_VIEWER) {
+
+        VisualVmSourceViewer.resolve()
+                            .ifPresent(sourceViewer -> sourceProperties
+                                    .setProperty(SOURCE_VIEWER_PROPERTY, sourceViewer.toString()));
+      }
       try (final var writer = Files.newBufferedWriter(tempFile.toPath(), StandardCharsets.UTF_8)) {
         sourceProperties.store(writer, null);
       }

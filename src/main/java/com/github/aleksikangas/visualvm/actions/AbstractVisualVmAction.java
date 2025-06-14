@@ -33,7 +33,7 @@ abstract class AbstractVisualVmAction extends AnAction {
     final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
     return new VisualVmOptions
             .Builder(state.executablePath)
-            .withSourceConfig(VisualVmSourceConfig.resolve(e.getProject()).orElse(null))
+            .withSourceConfig(VisualVmSourceConfig.resolve(e.getProject(), state.sourceConfigParameters()).orElse(null))
             .withJdkHome(state.overrideJdk ? state.jdkHome : null)
             .withWindowToFront(state.windowToFront ? true : null)
             .withLaf(Objects.equals(state.laf, VisualVmLaf.NONE) ? null : state.laf)

@@ -28,6 +28,8 @@ public final class VisualVmSettingsComponent {
   private final JBTextField executablePathField = new JBTextField();
   private final JButton executablePathBrowseButton = new JButton("Browse...");
   private final JBCheckBox automaticPidSelectionCheckBox = new JBCheckBox();
+  private final JBCheckBox overrideSourceViewerCheckBox = new JBCheckBox();
+  private final JBCheckBox automaticSourceRootsCheckBox = new JBCheckBox();
 
   // JDK home
   private final JBCheckBox overrideJdkCheckBox = new JBCheckBox();
@@ -53,6 +55,8 @@ public final class VisualVmSettingsComponent {
             .addLabeledComponent(new JBLabel("VisualVM executable:"), executablePathField)
             .addComponentToRightColumn(executablePathBrowseButton)
             .addLabeledComponent(new JBLabel("Automatic PID selection:"), automaticPidSelectionCheckBox)
+            .addLabeledComponent(new JBLabel("Override source viewer:"), overrideSourceViewerCheckBox)
+            .addLabeledComponent(new JBLabel("Automatic source roots:"), automaticSourceRootsCheckBox)
             .addSeparator()
             .addLabeledComponent(new JBLabel("Override JDK:"), overrideJdkCheckBox)
             .addLabeledComponent(jdkHomeLabel, jdkHomePathTextField)
@@ -67,7 +71,7 @@ public final class VisualVmSettingsComponent {
             .getPanel();
     mainPanel.add(contentPanel);
 
-    initializeExecutablePath();
+    initializeGeneral();
     initializeJdKHome();
     initializeAppearance();
     initializeClassPaths();
@@ -87,12 +91,28 @@ public final class VisualVmSettingsComponent {
     executablePathField.setText(Objects.requireNonNull(executablePath));
   }
 
-  public boolean getAutomaticPidSelection() {
+  public boolean automaticPidSelection() {
     return automaticPidSelectionCheckBox.isSelected();
   }
 
   public void setAutomaticPidSelection(final boolean automaticPidSelection) {
     automaticPidSelectionCheckBox.setSelected(automaticPidSelection);
+  }
+
+  public boolean overrideSourceViewer() {
+    return overrideSourceViewerCheckBox.isSelected();
+  }
+
+  public void setOverrideSourceViewer(final boolean overrideSourceViewer) {
+    overrideSourceViewerCheckBox.setSelected(overrideSourceViewer);
+  }
+
+  public boolean automaticSourceRoots() {
+    return automaticSourceRootsCheckBox.isSelected();
+  }
+
+  public void setAutomaticSourceRoots(final boolean automaticSourceRoots) {
+    automaticSourceRootsCheckBox.setSelected(automaticSourceRoots);
   }
 
   public boolean overrideJdk() {
@@ -200,9 +220,12 @@ public final class VisualVmSettingsComponent {
     customLafClassNameTextField.setEnabled(enabled);
   }
 
-  private void initializeExecutablePath() {
+  private void initializeGeneral() {
     executablePathField.setToolTipText("Path to the VisualVM executable");
     executablePathBrowseButton.addActionListener(e -> browseExecutablePath());
+    overrideSourceViewerCheckBox.setToolTipText("(--source-viewer): Use the current IDE as a custom source viewer");
+    automaticSourceRootsCheckBox.setToolTipText(
+            "(--source-roots): Automatically resolve source roots for all modules in the current project");
   }
 
   private void initializeJdKHome() {

@@ -2,6 +2,7 @@ package com.github.aleksikangas.visualvm.settings;
 
 import com.github.aleksikangas.visualvm.integration.options.VisualVmClassPaths;
 import com.github.aleksikangas.visualvm.integration.options.VisualVmLaf;
+import com.github.aleksikangas.visualvm.integration.options.VisualVmSourceConfig;
 import com.github.aleksikangas.visualvm.settings.converters.VisualVmClassPathConverter;
 import com.github.aleksikangas.visualvm.settings.converters.VisualVmLafConverter;
 import com.intellij.openapi.application.ApplicationManager;
@@ -37,6 +38,8 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
   public static final class State {
     public String executablePath = "";
     public boolean automaticPidSelection = true;
+    public boolean overrideSourceViewer = true;
+    public boolean automaticSourceRoots = true;
     public boolean overrideJdk = false;
     public String jdkHome = "";
     public boolean windowToFront = false;
@@ -75,6 +78,16 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
 
     public boolean isValid() {
       return isExecutablePathValid() && isJdkHomeValid();
+    }
+
+    public VisualVmSourceConfig.Parameters sourceConfigParameters() {
+      if (overrideSourceViewer && automaticSourceRoots)
+        return VisualVmSourceConfig.Parameters.BOTH;
+      if (automaticSourceRoots)
+        return VisualVmSourceConfig.Parameters.SOURCE_ROOTS;
+      if (overrideSourceViewer)
+        return VisualVmSourceConfig.Parameters.SOURCE_VIEWER;
+      return VisualVmSourceConfig.Parameters.NONE;
     }
 
     private boolean isExecutablePathValid() {
