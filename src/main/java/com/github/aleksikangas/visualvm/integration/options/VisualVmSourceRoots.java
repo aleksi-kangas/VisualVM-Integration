@@ -8,9 +8,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
-public class VisualVmSourceRoots {
+public final class VisualVmSourceRoots {
   private final Set<VirtualFile> sourceRoots;
 
   public static Optional<VisualVmSourceRoots> resolve(@Nullable final Project project) {
@@ -36,11 +39,7 @@ public class VisualVmSourceRoots {
     if (!sourceRoots.isEmpty()) {
       stringBuilder.deleteCharAt(stringBuilder.length() - 1);  // Remove the last path separator
     }
-    return stringBuilder.toString();
-  }
-
-  public Set<VirtualFile> getAll() {
-    return Collections.unmodifiableSet(sourceRoots);
+    return VisualVmSourceUtils.encodeValue(stringBuilder.toString());
   }
 
   private VisualVmSourceRoots(@NotNull final Set<VirtualFile> sourceRoots) {

@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.Properties;
 
-public class VisualVmSourceConfig {
+public final class VisualVmSourceConfig {
   public enum Parameters {
     NONE,
     SOURCE_ROOTS,

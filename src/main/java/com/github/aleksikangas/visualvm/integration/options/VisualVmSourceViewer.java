@@ -9,19 +9,25 @@ import com.intellij.util.system.CpuArch;
 import java.nio.file.Path;
 import java.util.Optional;
 
-public class VisualVmSourceViewer {
+import static com.github.aleksikangas.visualvm.integration.options.VisualVmSourceUtils.encodeValue;
+
+public final class VisualVmSourceViewer {
   private final Path ideExecutablePath;
 
   public static Optional<VisualVmSourceViewer> resolve() {
     final String ideScriptName = ApplicationNamesInfo.getInstance().getScriptName();
     final Path binPath = Path.of(PathManager.getBinPath());
     final Path homePath = Path.of(PathManager.getHomePath());
+    Path idePath = null;
     if (SystemInfo.isMac) {
-      return Optional.of(new VisualVmSourceViewer(homePath.resolve("MacOS").resolve(ideScriptName)));
+      idePath = homePath.resolve("MacOS").resolve(ideScriptName);
     } else if (SystemInfo.isUnix) {
-      return Optional.of(new VisualVmSourceViewer(binPath.resolve(ideScriptName + ".sh")));
+      idePath = binPath.resolve(ideScriptName + ".sh");
     } else if (SystemInfo.isWindows) {
-      return Optional.of(new VisualVmSourceViewer(binPath.resolve(ideScriptName + (CpuArch.CURRENT.width == 64 ? "64" : "") + ".exe")));
+      idePath = binPath.resolve(ideScriptName + (CpuArch.CURRENT.width == 64 ? "64" : "") + ".exe");
+    }
+    if (idePath != null) {
+      return Optional.of(new VisualVmSourceViewer(idePath));
     }
     VisualVmNotifications.notifyWarning(null, "Failed to resolve IDE as source viewer.");
     return Optional.empty();
@@ -29,7 +35,8 @@ public class VisualVmSourceViewer {
 
   @Override
   public String toString() {
-    return ideExecutablePath.toString() + " --line {line} {file}";
+    // Extra quotes are needed to prevent the path from being interpreted as more than one argument.
+    return encodeValue("\"" + ideExecutablePath.toString() + "\"") + " --line {line} {file}";
   }
 
   private VisualVmSourceViewer(final Path ideExecutablePath) {
