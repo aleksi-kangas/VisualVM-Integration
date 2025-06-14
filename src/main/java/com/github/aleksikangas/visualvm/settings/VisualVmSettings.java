@@ -1,5 +1,7 @@
 package com.github.aleksikangas.visualvm.settings;
 
+import com.github.aleksikangas.visualvm.integration.options.VisualVmClassPaths;
+import com.github.aleksikangas.visualvm.integration.options.VisualVmLaf;
 import com.github.aleksikangas.visualvm.settings.converters.VisualVmClassPathConverter;
 import com.github.aleksikangas.visualvm.settings.converters.VisualVmLafConverter;
 import com.intellij.openapi.application.ApplicationManager;

@@ -1,4 +1,4 @@
-package com.github.aleksikangas.visualvm.settings;
+package com.github.aleksikangas.visualvm.integration.options;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -1,4 +1,6 @@
-package com.github.aleksikangas.visualvm.integration;
+package com.github.aleksikangas.visualvm.integration.process;
+
+import com.github.aleksikangas.visualvm.integration.options.VisualVmOptions;
 
 public final class VisualVm {
   /**

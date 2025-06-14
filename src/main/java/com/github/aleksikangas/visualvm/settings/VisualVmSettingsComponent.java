@@ -1,5 +1,7 @@
 package com.github.aleksikangas.visualvm.settings;
 
+import com.github.aleksikangas.visualvm.integration.options.VisualVmClassPaths;
+import com.github.aleksikangas.visualvm.integration.options.VisualVmLaf;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
