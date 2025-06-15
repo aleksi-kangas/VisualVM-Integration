@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class VisualVmProcess implements Runnable {
+final class VisualVmProcess implements Runnable {
   private final VisualVmOptions options;
 
   VisualVmProcess(final VisualVmOptions options) {

@@ -2,7 +2,7 @@ package com.github.aleksikangas.visualvm.integration.options;
 
 import java.util.Arrays;
 
-public class VisualVmClassPaths {
+public final class VisualVmClassPaths {
   public static final VisualVmClassPaths EMPTY = new VisualVmClassPaths();
 
   private final String[] classPaths;

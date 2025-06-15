@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class VisualVmLaf {
+public final class VisualVmLaf {
   public static final VisualVmLaf NONE = new VisualVmLaf("");
   public static final VisualVmLaf METAL = new VisualVmLaf("Metal");
   public static final VisualVmLaf WINDOWS = new VisualVmLaf("Windows");
