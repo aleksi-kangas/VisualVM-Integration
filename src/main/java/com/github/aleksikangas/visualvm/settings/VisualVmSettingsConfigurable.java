@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public final class VisualVmSettingsConfigurable implements Configurable {
   @Nullable
-  private VisualVmSettingsComponent settingsComponent = null;
+  private VisualVmSettingsPanel visualVmSettingsPanel = null;
 
   @Override
   public @NlsContexts.ConfigurableName String getDisplayName() {
@@ -18,64 +18,37 @@ public final class VisualVmSettingsConfigurable implements Configurable {
 
   @Override
   public JComponent createComponent() {
-    if (settingsComponent == null) {
-      settingsComponent = new VisualVmSettingsComponent();
+    if (visualVmSettingsPanel == null) {
+      final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
+      visualVmSettingsPanel = VisualVmSettingsPanelKt.create(state);
     }
-    return settingsComponent.getPanel();
+    return visualVmSettingsPanel.getPanel();
   }
 
   @Override
   public boolean isModified() {
-    if (settingsComponent == null) return false;
-    final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
-    return !Objects.equals(settingsComponent.getExecutablePath(), state.executablePath)
-            || settingsComponent.automaticPidSelection() != state.automaticPidSelection
-            || settingsComponent.overrideSourceViewer() != state.overrideSourceViewer
-            || settingsComponent.automaticSourceRoots() != state.automaticSourceRoots
-            || settingsComponent.overrideJdk() != state.overrideJdk
-            || !Objects.equals(settingsComponent.getJdkHome(), state.jdkHome)
-            || settingsComponent.windowToFront() != state.windowToFront
-            || !Objects.equals(settingsComponent.getLaf(), state.laf)
-            || !Objects.equals(settingsComponent.getPrependClassPath(), state.prependClassPath)
-            || !Objects.equals(settingsComponent.getAppendClassPath(), state.appendClassPath);
+    if (visualVmSettingsPanel == null) return false;
+    return visualVmSettingsPanel.getPanel().isModified();
   }
 
   @Override
   public void apply() {
-    if (settingsComponent != null) {
+    if (visualVmSettingsPanel != null) {
       final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
-      state.executablePath = settingsComponent.getExecutablePath();
-      state.automaticPidSelection = settingsComponent.automaticPidSelection();
-      state.overrideSourceViewer = settingsComponent.overrideSourceViewer();
-      state.automaticSourceRoots = settingsComponent.automaticSourceRoots();
-      state.overrideJdk = settingsComponent.overrideJdk();
-      state.jdkHome = settingsComponent.getJdkHome();
-      state.windowToFront = settingsComponent.windowToFront();
-      state.laf = settingsComponent.getLaf();
-      state.prependClassPath = settingsComponent.getPrependClassPath();
-      state.appendClassPath = settingsComponent.getAppendClassPath();
+      visualVmSettingsPanel.getPanel().apply();
+      state.from(visualVmSettingsPanel.getModel());
     }
   }
 
   @Override
   public void reset() {
-    if (settingsComponent != null) {
-      final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
-      settingsComponent.setExecutablePath(state.executablePath);
-      settingsComponent.setAutomaticPidSelection(state.automaticPidSelection);
-      settingsComponent.setOverrideSourceViewer(state.overrideSourceViewer);
-      settingsComponent.setAutomaticSourceRoots(state.automaticSourceRoots);
-      settingsComponent.setOverrideJdk(state.overrideJdk);
-      settingsComponent.setJdkHome(state.jdkHome);
-      settingsComponent.setWindowToFront(state.windowToFront);
-      settingsComponent.setLaf(state.laf);
-      settingsComponent.setPrependClassPath(state.prependClassPath);
-      settingsComponent.setAppendClassPath(state.appendClassPath);
+    if (visualVmSettingsPanel != null) {
+      visualVmSettingsPanel.getPanel().reset();
     }
   }
 
   @Override
   public void disposeUIResources() {
-    settingsComponent = null;
+    visualVmSettingsPanel = null;
   }
 }

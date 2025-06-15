@@ -12,7 +12,7 @@ public final class VisualVmLaf {
   public static final VisualVmLaf AQUA = new VisualVmLaf("Aqua");
   public static final VisualVmLaf GTK = new VisualVmLaf("GTK");
 
-  public enum Variant {
+  public enum OverrideVariant {
     NONE,
     AQUA,
     GTK,
@@ -88,12 +88,12 @@ public final class VisualVmLaf {
     return Arrays.stream(knownValues()).noneMatch(v -> v.equals(this));
   }
 
-  public Variant variant() {
-    if (value.isEmpty()) return Variant.NONE;
-    if (METAL.value.equals(value)) return Variant.METAL;
-    if (WINDOWS.value.equals(value)) return Variant.WINDOWS;
-    if (GTK.value.equals(value)) return Variant.GTK;
-    if (AQUA.value.equals(value)) return Variant.AQUA;
-    return Variant.CUSTOM;
+  public OverrideVariant overrideVariant() {
+    if (value.isEmpty()) return OverrideVariant.NONE;
+    if (METAL.value.equals(value)) return OverrideVariant.METAL;
+    if (WINDOWS.value.equals(value)) return OverrideVariant.WINDOWS;
+    if (GTK.value.equals(value)) return OverrideVariant.GTK;
+    if (AQUA.value.equals(value)) return OverrideVariant.AQUA;
+    return OverrideVariant.CUSTOM;
   }
 }

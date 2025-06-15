@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 abstract class AbstractPidAwareVisualVmAction extends AbstractVisualVmAction {
   protected final CompletableFuture<Long> selectPid(final AnActionEvent e) {
     final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
-    if (state.automaticPidSelection) {
+    if (state.automaticPid) {
       return Optional.ofNullable(e.getDataContext()
                                   .getData(ExecutionDataKeys.EXECUTION_ENVIRONMENT))
                      .map(ExecutionEnvironment::getContentToReuse)

@@ -36,56 +36,47 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
   }
 
   public static final class State {
+    // General
     public String executablePath = "";
-    public boolean automaticPidSelection = true;
-    public boolean overrideSourceViewer = true;
+    public boolean ideAsSourceViewer = true;
+    public boolean automaticPid = true;
     public boolean automaticSourceRoots = true;
-    public boolean overrideJdk = false;
-    public String jdkHome = "";
+    // Appearance
     public boolean windowToFront = false;
     @OptionTag(converter = VisualVmLafConverter.class)
     public VisualVmLaf laf = VisualVmLaf.NONE;
+    // JDK
+    public boolean overrideJdk = false;
+    public String jdkHomePath = "";
+    // Miscellaneous
     @OptionTag(converter = VisualVmClassPathConverter.class)
     public VisualVmClassPaths prependClassPath = VisualVmClassPaths.EMPTY;
     @OptionTag(converter = VisualVmClassPathConverter.class)
     public VisualVmClassPaths appendClassPath = VisualVmClassPaths.EMPTY;
 
-    @Override
-    public boolean equals(final Object o) {
-      if (o == null || getClass() != o.getClass()) return false;
-      final State state = (State) o;
-      return automaticPidSelection == state.automaticPidSelection
-              && overrideJdk == state.overrideJdk
-              && windowToFront == state.windowToFront
-              && Objects.equals(executablePath, state.executablePath)
-              && Objects.equals(jdkHome, state.jdkHome)
-              && Objects.equals(laf, state.laf)
-              && Objects.equals(prependClassPath, state.prependClassPath)
-              && Objects.equals(appendClassPath, state.appendClassPath);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(executablePath,
-                          automaticPidSelection,
-                          overrideJdk,
-                          jdkHome,
-                          windowToFront,
-                          laf,
-                          prependClassPath,
-                          appendClassPath);
+    public void from(final VisualVmSettingsPanelModel model) {
+      executablePath = model.getExecutablePath();
+      ideAsSourceViewer = model.getIdeAsSourceViewer();
+      automaticPid = model.getAutomaticPid();
+      automaticSourceRoots = model.getAutomaticSourceRoots();
+      windowToFront = model.getWindowToFront();
+      laf = model.getLaf();
+      overrideJdk = model.getOverrideJdk();
+      jdkHomePath = model.getJdkHomePath();
+      prependClassPath = VisualVmClassPaths.ofCommaSeparated(model.getPrependClassPath());
+      appendClassPath = VisualVmClassPaths.ofCommaSeparated(model.getAppendClassPath());
     }
 
     public boolean isValid() {
-      return isExecutablePathValid() && isJdkHomeValid();
+      return isExecutablePathValid() && isJdkHomePathValid();
     }
 
     public VisualVmSourceConfig.Parameters sourceConfigParameters() {
-      if (overrideSourceViewer && automaticSourceRoots)
+      if (ideAsSourceViewer && automaticSourceRoots)
         return VisualVmSourceConfig.Parameters.BOTH;
       if (automaticSourceRoots)
         return VisualVmSourceConfig.Parameters.SOURCE_ROOTS;
-      if (overrideSourceViewer)
+      if (ideAsSourceViewer)
         return VisualVmSourceConfig.Parameters.SOURCE_VIEWER;
       return VisualVmSourceConfig.Parameters.NONE;
     }
@@ -101,13 +92,13 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
       }
     }
 
-    private boolean isJdkHomeValid() {
+    private boolean isJdkHomePathValid() {
       if (!overrideJdk)
         return true;
-      if (jdkHome == null)
+      if (jdkHomePath == null)
         return false;
       try {
-        final var path = Path.of(jdkHome);
+        final var path = Path.of(jdkHomePath);
         return path.toFile().exists();
       } catch (final InvalidPathException e) {
         return false;
