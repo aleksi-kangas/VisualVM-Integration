@@ -1,4 +1,4 @@
-package com.github.aleksikangas.visualvm.integration.options;
+package com.github.aleksikangas.visualvm.integration.options.misc;
 
 import java.util.Arrays;
 

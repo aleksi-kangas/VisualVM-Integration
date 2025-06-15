@@ -1,6 +1,6 @@
 package com.github.aleksikangas.visualvm.settings.converters;
 
-import com.github.aleksikangas.visualvm.integration.options.VisualVmLaf;
+import com.github.aleksikangas.visualvm.integration.options.appearance.VisualVmLaf;
 import com.intellij.util.xmlb.Converter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

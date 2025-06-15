@@ -1,8 +1,8 @@
 package com.github.aleksikangas.visualvm.actions;
 
-import com.github.aleksikangas.visualvm.integration.options.VisualVmLaf;
 import com.github.aleksikangas.visualvm.integration.options.VisualVmOptions;
-import com.github.aleksikangas.visualvm.integration.options.VisualVmSourceConfig;
+import com.github.aleksikangas.visualvm.integration.options.appearance.VisualVmLaf;
+import com.github.aleksikangas.visualvm.integration.options.sources.VisualVmSourceConfig;
 import com.github.aleksikangas.visualvm.settings.VisualVmSettings;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;

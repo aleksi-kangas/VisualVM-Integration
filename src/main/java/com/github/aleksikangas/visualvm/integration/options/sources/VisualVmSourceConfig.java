@@ -1,4 +1,4 @@
-package com.github.aleksikangas.visualvm.integration.options;
+package com.github.aleksikangas.visualvm.integration.options.sources;
 
 import com.github.aleksikangas.visualvm.notifications.VisualVmNotifications;
 import com.intellij.openapi.project.Project;

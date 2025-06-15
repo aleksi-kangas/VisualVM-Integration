@@ -1,6 +1,6 @@
 package com.github.aleksikangas.visualvm.settings.converters;
 
-import com.github.aleksikangas.visualvm.integration.options.VisualVmClassPaths;
+import com.github.aleksikangas.visualvm.integration.options.misc.VisualVmClassPaths;
 import com.intellij.util.xmlb.Converter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

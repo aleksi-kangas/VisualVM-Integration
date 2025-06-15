@@ -1,4 +1,4 @@
-package com.github.aleksikangas.visualvm.integration.options;
+package com.github.aleksikangas.visualvm.integration.options.sources;
 
 import com.github.aleksikangas.visualvm.notifications.VisualVmNotifications;
 import com.intellij.openapi.application.ApplicationNamesInfo;
@@ -9,7 +9,7 @@ import com.intellij.util.system.CpuArch;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static com.github.aleksikangas.visualvm.integration.options.VisualVmSourceUtils.encodeValue;
+import static com.github.aleksikangas.visualvm.integration.options.sources.VisualVmSourceUtils.encodeValue;
 
 public final class VisualVmSourceViewer {
   private final Path ideExecutablePath;

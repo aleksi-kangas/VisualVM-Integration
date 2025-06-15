@@ -1,5 +1,10 @@
 package com.github.aleksikangas.visualvm.integration.options;
 
+import com.github.aleksikangas.visualvm.integration.options.appearance.VisualVmLaf;
+import com.github.aleksikangas.visualvm.integration.options.misc.VisualVmClassPaths;
+import com.github.aleksikangas.visualvm.integration.options.sources.VisualVmSourceConfig;
+import com.github.aleksikangas.visualvm.integration.options.sources.VisualVmSourceRoots;
+import com.github.aleksikangas.visualvm.integration.options.sources.VisualVmSourceViewer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -8,45 +13,67 @@ import java.util.Optional;
 /**
  * <a href="https://visualvm.github.io/docs/command-line-options.html">VisualVM Command Line Options</a>
  */
-public record VisualVmOptions(String executable,
-                              Optional<VisualVmSourceViewer> sourceViewer,
-                              Optional<VisualVmSourceRoots> sourceRoots,
-                              Optional<VisualVmSourceConfig> sourceConfig,
-                              Optional<String> jdkHome,
-                              Optional<String> openFile,
-                              Optional<Long> openPid,
-                              Optional<String> openJmx,
-                              Optional<Long> threadDumpPid,
-                              Optional<Long> heapDumpPid,
-                              Optional<Long> startCpuSamplerPid,
-                              Optional<Long> startMemorySamplerPid,
-                              Optional<Long> snapshotSamplerPid,
-                              Optional<Long> stopSamplerPid,
-                              Optional<Boolean> windowToFront,
-                              Optional<VisualVmLaf> laf,
-                              Optional<VisualVmClassPaths> prependClassPath,
-                              Optional<VisualVmClassPaths> appendClassPath) {
+public record VisualVmOptions(
+        // General
+        String executable,
+        Optional<Long> openPid,
+        Optional<String> openJmx,
+        Optional<String> openFile,
+
+        // Appearance
+        Optional<VisualVmLaf> laf,
+        Optional<Boolean> windowToFront,
+
+        // JDK
+        Optional<String> jdkHome,
+
+        // Dumps
+        Optional<Long> heapDumpPid,
+        Optional<Long> threadDumpPid,
+
+        // Sampler
+        Optional<Long> startCpuSamplerPid,
+        Optional<Long> startMemorySamplerPid,
+        Optional<Long> snapshotSamplerPid,
+        Optional<Long> stopSamplerPid,
+
+        // Sources
+        Optional<VisualVmSourceConfig> sourceConfig,
+        Optional<VisualVmSourceRoots> sourceRoots,
+        Optional<VisualVmSourceViewer> sourceViewer,
+
+        // Miscellaneous
+        Optional<VisualVmClassPaths> prependClassPath,
+        Optional<VisualVmClassPaths> appendClassPath) {
+
   public static final class Builder {
+    // General
     @NotNull
     private final String executable;
-    @Nullable
-    private VisualVmSourceViewer sourceViewer = null;
-    @Nullable
-    private VisualVmSourceRoots sourceRoots = null;
-    @Nullable
-    private VisualVmSourceConfig sourceConfig = null;
-    @Nullable
-    private String jdkHome = null;
-    @Nullable
-    private String openFile = null;
     @Nullable
     private Long openPid = null;
     @Nullable
     private String openJmx = null;
     @Nullable
-    private Long threadDumpPid = null;
+    private String openFile = null;
+
+    // Appearance
+    @Nullable
+    private VisualVmLaf laf = null;
+    @Nullable
+    private Boolean windowToFront = null;
+
+    // JDK
+    @Nullable
+    private String jdkHome = null;
+
+    // Dumps
     @Nullable
     private Long heapDumpPid = null;
+    @Nullable
+    private Long threadDumpPid = null;
+
+    // Sampler
     @Nullable
     private Long startCpuSamplerPid = null;
     @Nullable
@@ -55,10 +82,16 @@ public record VisualVmOptions(String executable,
     private Long snapshotSamplerPid = null;
     @Nullable
     private Long stopSamplerPid = null;
+
+    // Sources
     @Nullable
-    private Boolean windowToFront = null;
+    private VisualVmSourceConfig sourceConfig = null;
     @Nullable
-    private VisualVmLaf laf = null;
+    private VisualVmSourceRoots sourceRoots = null;
+    @Nullable
+    private VisualVmSourceViewer sourceViewer = null;
+
+    // Miscellaneous
     @Nullable
     private VisualVmClassPaths prependClassPath = null;
     @Nullable
@@ -72,31 +105,6 @@ public record VisualVmOptions(String executable,
       return new VisualVmOptions(this);
     }
 
-    public Builder withSourceViewer(@Nullable final VisualVmSourceViewer sourceViewer) {
-      this.sourceViewer = sourceViewer;
-      return this;
-    }
-
-    public Builder withSourceRoots(@Nullable final VisualVmSourceRoots sourceRoots) {
-      this.sourceRoots = sourceRoots;
-      return this;
-    }
-
-    public Builder withSourceConfig(@Nullable final VisualVmSourceConfig sourceConfig) {
-      this.sourceConfig = sourceConfig;
-      return this;
-    }
-
-    public Builder withJdkHome(@Nullable final String jdkHome) {
-      this.jdkHome = jdkHome;
-      return this;
-    }
-
-    public Builder withOpenFile(@Nullable final String openFile) {
-      this.openFile = openFile;
-      return this;
-    }
-
     public Builder withOpenPid(@Nullable final Long openPid) {
       this.openPid = openPid;
       return this;
@@ -107,13 +115,33 @@ public record VisualVmOptions(String executable,
       return this;
     }
 
-    public Builder withThreadDumpPid(@Nullable final Long threadDumpPid) {
-      this.threadDumpPid = threadDumpPid;
+    public Builder withOpenFile(@Nullable final String openFile) {
+      this.openFile = openFile;
+      return this;
+    }
+
+    public Builder withLaf(@Nullable final VisualVmLaf laf) {
+      this.laf = laf;
+      return this;
+    }
+
+    public Builder withWindowToFront(@Nullable final Boolean windowToFront) {
+      this.windowToFront = windowToFront;
+      return this;
+    }
+
+    public Builder withJdkHome(@Nullable final String jdkHome) {
+      this.jdkHome = jdkHome;
       return this;
     }
 
     public Builder withHeapDumpPid(@Nullable final Long heapDumpPid) {
       this.heapDumpPid = heapDumpPid;
+      return this;
+    }
+
+    public Builder withThreadDumpPid(@Nullable final Long threadDumpPid) {
+      this.threadDumpPid = threadDumpPid;
       return this;
     }
 
@@ -137,13 +165,18 @@ public record VisualVmOptions(String executable,
       return this;
     }
 
-    public Builder withWindowToFront(@Nullable final Boolean windowToFront) {
-      this.windowToFront = windowToFront;
+    public Builder withSourceConfig(@Nullable final VisualVmSourceConfig sourceConfig) {
+      this.sourceConfig = sourceConfig;
       return this;
     }
 
-    public Builder withLaf(@Nullable final VisualVmLaf laf) {
-      this.laf = laf;
+    public Builder withSourceRoots(@Nullable final VisualVmSourceRoots sourceRoots) {
+      this.sourceRoots = sourceRoots;
+      return this;
+    }
+
+    public Builder withSourceViewer(@Nullable final VisualVmSourceViewer sourceViewer) {
+      this.sourceViewer = sourceViewer;
       return this;
     }
 
@@ -160,21 +193,21 @@ public record VisualVmOptions(String executable,
 
   private VisualVmOptions(final Builder builder) {
     this(builder.executable,
-         Optional.ofNullable(builder.sourceViewer),
-         Optional.ofNullable(builder.sourceRoots),
-         Optional.ofNullable(builder.sourceConfig),
-         Optional.ofNullable(builder.jdkHome),
-         Optional.ofNullable(builder.openFile),
          Optional.ofNullable(builder.openPid),
          Optional.ofNullable(builder.openJmx),
-         Optional.ofNullable(builder.threadDumpPid),
+         Optional.ofNullable(builder.openFile),
+         Optional.ofNullable(builder.laf),
+         Optional.ofNullable(builder.windowToFront),
+         Optional.ofNullable(builder.jdkHome),
          Optional.ofNullable(builder.heapDumpPid),
+         Optional.ofNullable(builder.threadDumpPid),
          Optional.ofNullable(builder.startCpuSamplerPid),
          Optional.ofNullable(builder.startMemorySamplerPid),
          Optional.ofNullable(builder.snapshotSamplerPid),
          Optional.ofNullable(builder.stopSamplerPid),
-         Optional.ofNullable(builder.windowToFront),
-         Optional.ofNullable(builder.laf),
+         Optional.ofNullable(builder.sourceConfig),
+         Optional.ofNullable(builder.sourceRoots),
+         Optional.ofNullable(builder.sourceViewer),
          Optional.ofNullable(builder.prependClassPath),
          Optional.ofNullable(builder.appendClassPath));
   }
