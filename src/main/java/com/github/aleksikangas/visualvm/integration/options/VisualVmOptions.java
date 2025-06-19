@@ -42,6 +42,10 @@ public record VisualVmOptions(
         Optional<VisualVmSourceRoots> sourceRoots,
         Optional<VisualVmSourceViewer> sourceViewer,
 
+        // Directories
+        Optional<String> userDir,
+        Optional<String> cacheDir,
+
         // Miscellaneous
         Optional<VisualVmClassPaths> prependClassPath,
         Optional<VisualVmClassPaths> appendClassPath) {
@@ -90,6 +94,12 @@ public record VisualVmOptions(
     private VisualVmSourceRoots sourceRoots = null;
     @Nullable
     private VisualVmSourceViewer sourceViewer = null;
+
+    // Directories
+    @Nullable
+    private String userDir = null;
+    @Nullable
+    private String cacheDir = null;
 
     // Miscellaneous
     @Nullable
@@ -180,6 +190,16 @@ public record VisualVmOptions(
       return this;
     }
 
+    public Builder withUserDir(@Nullable final String userDir) {
+      this.userDir = userDir;
+      return this;
+    }
+
+    public Builder withCacheDir(@Nullable final String cacheDir) {
+      this.cacheDir = cacheDir;
+      return this;
+    }
+
     public Builder withPrependClassPath(@Nullable final VisualVmClassPaths prependClassPath) {
       this.prependClassPath = prependClassPath;
       return this;
@@ -208,6 +228,8 @@ public record VisualVmOptions(
          Optional.ofNullable(builder.sourceConfig),
          Optional.ofNullable(builder.sourceRoots),
          Optional.ofNullable(builder.sourceViewer),
+         Optional.ofNullable(builder.userDir),
+         Optional.ofNullable(builder.cacheDir),
          Optional.ofNullable(builder.prependClassPath),
          Optional.ofNullable(builder.appendClassPath));
   }

@@ -96,6 +96,15 @@ final class VisualVmProcess implements Runnable {
       commandList.add(VisualVmCommandLineOptions.SOURCE_VIEWER.toString());
       commandList.add(sourceViewer.toString());
     });
+    // Directories
+    options.userDir().ifPresent(userDir -> {
+      commandList.add(VisualVmCommandLineOptions.USER_DIR.toString());
+      commandList.add(userDir);
+    });
+    options.cacheDir().ifPresent(cacheDir -> {
+      commandList.add(VisualVmCommandLineOptions.CACHE_DIR.toString());
+      commandList.add(cacheDir);
+    });
     // Miscellaneous
     options.prependClassPath()
            .ifPresent(prependClassPath -> Arrays

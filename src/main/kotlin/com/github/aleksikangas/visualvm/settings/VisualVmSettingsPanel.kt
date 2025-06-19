@@ -20,6 +20,10 @@ fun create(state: VisualVmSettings.State): VisualVmSettingsPanel {
         if (state.laf.overrideVariant() === VisualVmLaf.OverrideVariant.CUSTOM) state.laf.toString() else "",
         state.overrideJdk,
         state.jdkHomePath,
+        state.overrideUserDir,
+        state.userDirPath,
+        state.overrideCacheDir,
+        state.cacheDirPath,
         state.prependClassPath.toString(),
         state.appendClassPath.toString()
     )
@@ -77,6 +81,32 @@ fun create(state: VisualVmSettings.State): VisualVmSettingsPanel {
                     .enabledIf(overrideJdkCheckBox.selected)
             }
         }
+        group("Directories") {
+            lateinit var overrideUserDirCheckBox: Cell<JBCheckBox>
+            lateinit var overrideCacheDirCheckBox: Cell<JBCheckBox>
+            row {
+                overrideUserDirCheckBox = checkBox("Override user directory")
+                    .bindSelected(model::overrideUserDir)
+                    .comment("(--userdir): Defines the directory to store user settings like remote hosts, JMX connections, etc., and installed plugins. Cannot be within the VisualVM installation directory.")
+            }
+            row("User directory:") {
+                textFieldWithBrowseButton(FileChooserDescriptorFactory.singleDir(), null, null)
+                    .align(AlignX.FILL)
+                    .bindText(model::userDirPath)
+                    .enabledIf(overrideUserDirCheckBox.selected)
+            }
+            row {
+                overrideCacheDirCheckBox = checkBox("Override cache directory")
+                    .bindSelected(model::overrideCacheDir)
+                    .comment("(--cachedir): Defines the directory to store user cache, must be different from user directory.")
+            }
+            row("Cache directory:") {
+                textFieldWithBrowseButton(FileChooserDescriptorFactory.singleDir(), null, null)
+                    .align(AlignX.FILL)
+                    .bindText(model::cacheDirPath)
+                    .enabledIf(overrideCacheDirCheckBox.selected)
+            }
+        }
         group("Miscellaneous") {
             row("Prepend classpath:") {
                 textField()
@@ -108,6 +138,11 @@ data class VisualVmSettingsPanelModel(
     // JDK
     var overrideJdk: Boolean,
     var jdkHomePath: String,
+    // Directories
+    var overrideUserDir: Boolean,
+    var userDirPath: String,
+    var overrideCacheDir: Boolean,
+    var cacheDirPath: String,
     // Miscellaneous
     var prependClassPath: String,
     var appendClassPath: String

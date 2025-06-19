@@ -37,6 +37,8 @@ abstract class AbstractVisualVmAction extends AnAction {
             .withJdkHome(state.overrideJdk ? state.jdkHomePath : null)
             .withWindowToFront(state.windowToFront ? true : null)
             .withLaf(Objects.equals(state.laf, VisualVmLaf.NONE) ? null : state.laf)
+            .withUserDir(state.userDirPath.isEmpty() ? null : state.userDirPath)
+            .withCacheDir(state.cacheDirPath.isEmpty() ? null : state.cacheDirPath)
             .withPrependClassPath(state.prependClassPath.isEmpty() ? null : state.prependClassPath)
             .withAppendClassPath(state.appendClassPath.isEmpty() ? null : state.appendClassPath);
   }

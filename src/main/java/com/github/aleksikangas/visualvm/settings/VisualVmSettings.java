@@ -48,6 +48,11 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
     // JDK
     public boolean overrideJdk = false;
     public String jdkHomePath = "";
+    // Directories
+    public boolean overrideUserDir = false;
+    public String userDirPath = "";
+    public boolean overrideCacheDir = false;
+    public String cacheDirPath = "";
     // Miscellaneous
     @OptionTag(converter = VisualVmClassPathConverter.class)
     public VisualVmClassPaths prependClassPath = VisualVmClassPaths.EMPTY;
@@ -63,6 +68,10 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
       laf = model.getLaf();
       overrideJdk = model.getOverrideJdk();
       jdkHomePath = model.getJdkHomePath();
+      overrideUserDir = model.getOverrideUserDir();
+      userDirPath = model.getUserDirPath();
+      overrideCacheDir = model.getOverrideCacheDir();
+      cacheDirPath = model.getCacheDirPath();
       prependClassPath = VisualVmClassPaths.ofCommaSeparated(model.getPrependClassPath());
       appendClassPath = VisualVmClassPaths.ofCommaSeparated(model.getAppendClassPath());
     }
