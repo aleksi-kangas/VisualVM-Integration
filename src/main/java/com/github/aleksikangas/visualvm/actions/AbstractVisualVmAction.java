@@ -34,11 +34,11 @@ abstract class AbstractVisualVmAction extends AnAction {
     return new VisualVmOptions
             .Builder(state.executablePath)
             .withSourceConfig(VisualVmSourceConfig.resolve(e.getProject(), state.sourceConfigParameters()).orElse(null))
-            .withJdkHome(state.overrideJdk ? state.jdkHomePath : null)
+            .withJdkHome(state.overrideJdk && !state.jdkHomePath.isBlank() ? state.jdkHomePath : null)
             .withWindowToFront(state.windowToFront ? true : null)
             .withLaf(Objects.equals(state.laf, VisualVmLaf.NONE) ? null : state.laf)
-            .withUserDir(state.userDirPath.isEmpty() ? null : state.userDirPath)
-            .withCacheDir(state.cacheDirPath.isEmpty() ? null : state.cacheDirPath)
+            .withUserDir(state.overrideUserDir && !state.userDirPath.isBlank() ? state.userDirPath : null)
+            .withCacheDir(state.overrideCacheDir && !state.cacheDirPath.isBlank() ? state.cacheDirPath : null)
             .withPrependClassPath(state.prependClassPath.isEmpty() ? null : state.prependClassPath)
             .withAppendClassPath(state.appendClassPath.isEmpty() ? null : state.appendClassPath);
   }
