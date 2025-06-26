@@ -108,14 +108,14 @@ final class VisualVmProcess implements Runnable {
     // Miscellaneous
     options.prependClassPath()
            .ifPresent(prependClassPath -> Arrays
-                   .stream(prependClassPath.values())
+                   .stream(prependClassPath.classPaths())
                    .forEach(classPath -> {
                      commandList.add(VisualVmCommandLineOptions.CLASSPATH_PREPEND.toString());
                      commandList.add(classPath);
                    }));
     options.appendClassPath()
            .ifPresent(appendClassPath -> Arrays
-                   .stream(appendClassPath.values())
+                   .stream(appendClassPath.classPaths())
                    .forEach(classPath -> {
                      commandList.add(VisualVmCommandLineOptions.CLASSPATH_APPEND.toString());
                      commandList.add(classPath);

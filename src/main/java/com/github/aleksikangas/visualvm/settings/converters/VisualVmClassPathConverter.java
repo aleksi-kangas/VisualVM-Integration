@@ -3,7 +3,6 @@ package com.github.aleksikangas.visualvm.settings.converters;
 import com.github.aleksikangas.visualvm.integration.options.misc.VisualVmClassPaths;
 import com.intellij.util.xmlb.Converter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public final class VisualVmClassPathConverter extends Converter<VisualVmClassPaths> {
   @Override
@@ -12,7 +11,7 @@ public final class VisualVmClassPathConverter extends Converter<VisualVmClassPat
   }
 
   @Override
-  public @Nullable String toString(final VisualVmClassPaths visualVmClassPaths) {
+  public @NotNull String toString(@NotNull final VisualVmClassPaths visualVmClassPaths) {
     return visualVmClassPaths.toString();
   }
 }

@@ -1,32 +1,19 @@
 package com.github.aleksikangas.visualvm.settings
 
+import com.github.aleksikangas.visualvm.integration.options.appearance.CustomVisualVmLaf
+import com.github.aleksikangas.visualvm.integration.options.appearance.DefaultVisualVmLaf
 import com.github.aleksikangas.visualvm.integration.options.appearance.VisualVmLaf
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory
 import com.intellij.openapi.ui.DialogPanel
-import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.dsl.builder.*
+import fleet.util.cast
+import io.ktor.util.reflect.*
 
 data class VisualVmSettingsPanel(val panel: DialogPanel, val model: VisualVmSettingsPanelModel)
 
 fun create(state: VisualVmSettings.State): VisualVmSettingsPanel {
     lateinit var panel: DialogPanel
-    val model = VisualVmSettingsPanelModel(
-        state.executablePath,
-        state.ideAsSourceViewer,
-        state.automaticPid,
-        state.automaticSourceRoots,
-        state.windowToFront,
-        state.laf.overrideVariant(),
-        if (state.laf.overrideVariant() === VisualVmLaf.OverrideVariant.CUSTOM) state.laf.toString() else "",
-        state.overrideJdk,
-        state.jdkHomePath,
-        state.overrideUserDir,
-        state.userDirPath,
-        state.overrideCacheDir,
-        state.cacheDirPath,
-        state.prependClassPath.toString(),
-        state.appendClassPath.toString()
-    )
+    val model = VisualVmSettingsPanelModel.from(state)
     panel = panel {
         group("General") {
             row("VisualVM executable:") {
@@ -58,53 +45,37 @@ fun create(state: VisualVmSettings.State): VisualVmSettingsPanel {
                     .comment("(--window-to-front): Brings the currently opened VisualVM window to front if supported by the OS window system.")
             }
             row("Override LAF:") {
-                comboBox(VisualVmLaf.OverrideVariant.entries)
-                    .bindItem(model::overrideLaf.toNullableProperty())
+                comboBox(DefaultVisualVmLaf.Variant.entries)
+                    .bindItem(model::defaultVisualVmLaf.toNullableProperty())
                     .comment("(--laf): Defines the Swing look and feel used to render the VisualVM GUI.")
             }
             row("Custom LAF:") {
                 textField()
+                    .align(AlignX.FILL)
                     .bindText(model::customLafClassName)
+                    .comment("(--laf): Overrides the Swing look and feel with a custom LAF.")
             }
         }
         group("JDK") {
-            lateinit var overrideJdkCheckBox: Cell<JBCheckBox>
-            row {
-                overrideJdkCheckBox = checkBox("Override JDK")
-                    .bindSelected(model::overrideJdk)
-                    .comment("(--jdkhome): Overrides the JDK installation used with VisualVM.")
-            }
             row("JDK home:") {
                 textFieldWithBrowseButton(FileChooserDescriptorFactory.singleDir(), null, null)
                     .align(AlignX.FILL)
                     .bindText(model::jdkHomePath)
-                    .enabledIf(overrideJdkCheckBox.selected)
+                    .comment("(--jdkhome): Overrides the JDK installation used with VisualVM.")
             }
         }
         group("Directories") {
-            lateinit var overrideUserDirCheckBox: Cell<JBCheckBox>
-            lateinit var overrideCacheDirCheckBox: Cell<JBCheckBox>
-            row {
-                overrideUserDirCheckBox = checkBox("Override user directory")
-                    .bindSelected(model::overrideUserDir)
-                    .comment("(--userdir): Defines the directory to store user settings like remote hosts, JMX connections, etc., and installed plugins. Cannot be within the VisualVM installation directory.")
+            row("Cache directory:") {
+                textFieldWithBrowseButton(FileChooserDescriptorFactory.singleDir(), null, null)
+                    .align(AlignX.FILL)
+                    .bindText(model::cacheDirPath)
+                    .comment("(--cachedir): Defines the directory to store user cache, must be different from user directory.")
             }
             row("User directory:") {
                 textFieldWithBrowseButton(FileChooserDescriptorFactory.singleDir(), null, null)
                     .align(AlignX.FILL)
                     .bindText(model::userDirPath)
-                    .enabledIf(overrideUserDirCheckBox.selected)
-            }
-            row {
-                overrideCacheDirCheckBox = checkBox("Override cache directory")
-                    .bindSelected(model::overrideCacheDir)
-                    .comment("(--cachedir): Defines the directory to store user cache, must be different from user directory.")
-            }
-            row("Cache directory:") {
-                textFieldWithBrowseButton(FileChooserDescriptorFactory.singleDir(), null, null)
-                    .align(AlignX.FILL)
-                    .bindText(model::cacheDirPath)
-                    .enabledIf(overrideCacheDirCheckBox.selected)
+                    .comment("(--userdir): Defines the directory to store user settings like remote hosts, JMX connections, etc., and installed plugins. Cannot be within the VisualVM installation directory.")
             }
         }
         group("Miscellaneous") {
@@ -129,32 +100,52 @@ data class VisualVmSettingsPanelModel(
     // General
     var executablePath: String,
     var ideAsSourceViewer: Boolean,
-    var automaticPid: Boolean,
     var automaticSourceRoots: Boolean,
+    var automaticPid: Boolean,
     // Appearance
     var windowToFront: Boolean,
-    var overrideLaf: VisualVmLaf.OverrideVariant,
+    var defaultVisualVmLaf: DefaultVisualVmLaf.Variant,
     var customLafClassName: String,
     // JDK
-    var overrideJdk: Boolean,
     var jdkHomePath: String,
     // Directories
-    var overrideUserDir: Boolean,
-    var userDirPath: String,
-    var overrideCacheDir: Boolean,
     var cacheDirPath: String,
+    var userDirPath: String,
     // Miscellaneous
     var prependClassPath: String,
     var appendClassPath: String
 ) {
-    fun getLaf(): VisualVmLaf {
-        return when (overrideLaf) {
-            VisualVmLaf.OverrideVariant.NONE -> VisualVmLaf.NONE
-            VisualVmLaf.OverrideVariant.AQUA -> VisualVmLaf.AQUA
-            VisualVmLaf.OverrideVariant.GTK -> VisualVmLaf.GTK
-            VisualVmLaf.OverrideVariant.METAL -> VisualVmLaf.METAL
-            VisualVmLaf.OverrideVariant.WINDOWS -> VisualVmLaf.WINDOWS
-            VisualVmLaf.OverrideVariant.CUSTOM -> VisualVmLaf.custom(customLafClassName)
+    companion object {
+        fun from(state: VisualVmSettings.State): VisualVmSettingsPanelModel {
+            return VisualVmSettingsPanelModel(
+                state.executablePath().orElse(""),
+                state.ideAsSourceViewer(),
+                state.automaticSourceRoots(),
+                state.automaticPid(),
+                state.windowToFront(),
+                state
+                    .laf()
+                    .filter { x -> x.instanceOf(DefaultVisualVmLaf::class) }
+                    .map { x -> x.cast<DefaultVisualVmLaf>() }
+                    .map { x -> x.variant }
+                    .orElse(DefaultVisualVmLaf.Variant.NONE),
+                state
+                    .laf()
+                    .filter { x -> x.instanceOf(CustomVisualVmLaf::class) }
+                    .map { x -> x.cast<CustomVisualVmLaf>() }
+                    .map { x -> x.value() }
+                    .orElse(""),
+                state.jdkHomePath().orElse(""),
+                state.cacheDirPath().orElse(""),
+                state.userDirPath().orElse(""),
+                state.prependClassPath().map { it.toString() }.orElse(""),
+                state.appendClassPath().map { it.toString() }.orElse("")
+            )
         }
+    }
+
+    fun getLaf(): VisualVmLaf {
+        if (customLafClassName.isNotBlank()) return CustomVisualVmLaf(customLafClassName)
+        return DefaultVisualVmLaf(defaultVisualVmLaf)
     }
 }
