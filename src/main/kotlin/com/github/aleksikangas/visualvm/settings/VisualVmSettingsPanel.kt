@@ -30,7 +30,7 @@ fun create(state: VisualVmSettings.State): VisualVmSettingsPanel {
             row {
                 checkBox("Automatic PID selection")
                     .bindSelected(model::automaticPid)
-                    .comment("Automatically attempts to resolve the PID of the running process. Disable if wanting to target e.g. a child process.")
+                    .comment("Automatically attempts to resolve the PID of the running process. Disable if wanting to target the process manually (e.g. a child process).")
             }
             row {
                 checkBox("Automatic source roots")
