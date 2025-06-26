@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.aleksi-kangas"
-version = "0.3.2"
+version = "0.3.3"
 
 repositories {
     mavenCentral()
@@ -33,7 +33,7 @@ intellijPlatform {
         }
 
         changeNotes = """
-            VisualVM integration with automatic PID selection and resolving of source roots.
+            Improvements to VisualVM integration plugin settings and support for <i>--fontsize</i> argument.
         """.trimIndent()
     }
 }
