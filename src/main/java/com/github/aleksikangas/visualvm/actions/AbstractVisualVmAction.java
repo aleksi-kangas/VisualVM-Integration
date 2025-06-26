@@ -30,18 +30,24 @@ abstract class AbstractVisualVmAction extends AnAction {
    */
   protected VisualVmOptions.Builder visualVmOptionsBuilder(final AnActionEvent e) {
     final VisualVmSettings.State state = Objects.requireNonNull(VisualVmSettings.getInstance().getState());
+    // General
     final var optionsBuilder = new VisualVmOptions.Builder(state.executablePath()
                                                                 .orElseThrow(() -> new IllegalStateException(
                                                                         "VisualVM executable path is not set")));
     VisualVmSourceConfig.resolve(e.getProject(), state.sourceConfigParameters())
                         .ifPresent(optionsBuilder::withSourceConfig);
+    // Appearance
+    optionsBuilder.withFontSize(state.fontSize());
+    state.laf().ifPresent(optionsBuilder::withLaf);
     if (state.windowToFront()) {
       optionsBuilder.withWindowToFront(true);
     }
-    state.laf().ifPresent(optionsBuilder::withLaf);
+    // JDK
     state.jdkHomePath().ifPresent(optionsBuilder::withJdkHome);
+    // Directories
     state.cacheDirPath().ifPresent(optionsBuilder::withCacheDir);
     state.userDirPath().ifPresent(optionsBuilder::withUserDir);
+    // Miscellaneous
     state.prependClassPath().ifPresent(optionsBuilder::withPrependClassPath);
     state.appendClassPath().ifPresent(optionsBuilder::withAppendClassPath);
     return optionsBuilder;

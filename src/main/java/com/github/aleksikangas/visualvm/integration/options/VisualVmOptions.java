@@ -21,6 +21,7 @@ public record VisualVmOptions(
         Optional<String> openFile,
 
         // Appearance
+        Optional<Integer> fontSize,
         Optional<VisualVmLaf> laf,
         Optional<Boolean> windowToFront,
 
@@ -62,6 +63,8 @@ public record VisualVmOptions(
     private String openFile = null;
 
     // Appearance
+    @Nullable
+    private Integer fontSize = null;
     @Nullable
     private VisualVmLaf laf = null;
     @Nullable
@@ -127,6 +130,11 @@ public record VisualVmOptions(
 
     public Builder withOpenFile(@Nullable final String openFile) {
       this.openFile = openFile;
+      return this;
+    }
+
+    public Builder withFontSize(@Nullable final Integer fontSize) {
+      this.fontSize = fontSize;
       return this;
     }
 
@@ -216,6 +224,7 @@ public record VisualVmOptions(
          Optional.ofNullable(builder.openPid),
          Optional.ofNullable(builder.openJmx),
          Optional.ofNullable(builder.openFile),
+         Optional.ofNullable(builder.fontSize),
          Optional.ofNullable(builder.laf),
          Optional.ofNullable(builder.windowToFront),
          Optional.ofNullable(builder.jdkHome),

@@ -46,6 +46,10 @@ final class VisualVmProcess implements Runnable {
       commandList.add(openFile);
     });
     // Appearance
+    options.fontSize().ifPresent(fontSize -> {
+      commandList.add(VisualVmCommandLineOptions.FONT_SIZE.toString());
+      commandList.add(String.valueOf(fontSize));
+    });
     options.laf().ifPresent(laf -> {
       commandList.add(VisualVmCommandLineOptions.LAF.toString());
       commandList.add(laf.toString());

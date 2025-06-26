@@ -50,9 +50,11 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
     private boolean automaticPid = true;
     // Appearance
     @Attribute
-    private boolean windowToFront = false;
+    private int fontSize = 12;
     @Attribute(converter = VisualVmLafConverter.class)
     private VisualVmLaf laf = DefaultVisualVmLaf.NONE;
+    @Attribute
+    private boolean windowToFront = false;
     // JDK
     @Attribute
     private String jdkHomePath = "";
@@ -72,8 +74,9 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
       ideAsSourceViewer = model.getIdeAsSourceViewer();
       automaticPid = model.getAutomaticPid();
       automaticSourceRoots = model.getAutomaticSourceRoots();
-      windowToFront = model.getWindowToFront();
+      fontSize = model.getFontSize();
       laf = model.getLaf();
+      windowToFront = model.getWindowToFront();
       jdkHomePath = model.getJdkHomePath();
       userDirPath = model.getUserDirPath();
       cacheDirPath = model.getCacheDirPath();
@@ -116,8 +119,8 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
       return automaticPid;
     }
 
-    public boolean windowToFront() {
-      return windowToFront;
+    public int fontSize() {
+      return fontSize;
     }
 
     /**
@@ -127,6 +130,10 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
       return Optional.ofNullable(laf)
                      .filter(laf -> (laf instanceof DefaultVisualVmLaf && laf != DefaultVisualVmLaf.NONE)
                              || laf instanceof CustomVisualVmLaf);
+    }
+
+    public boolean windowToFront() {
+      return windowToFront;
     }
 
     /**

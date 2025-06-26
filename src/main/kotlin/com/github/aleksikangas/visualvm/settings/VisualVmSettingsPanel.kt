@@ -39,6 +39,11 @@ fun create(state: VisualVmSettings.State): VisualVmSettingsPanel {
             }
         }
         group("Appearance") {
+            row("Font size") {
+                spinner(1..100)
+                    .bindIntValue(model::fontSize)
+                    .comment("(--font-size): Defines the base font size used in the VisualVM GUI.")
+            }
             row {
                 checkBox("Window to front")
                     .bindSelected(model::windowToFront)
@@ -103,6 +108,7 @@ data class VisualVmSettingsPanelModel(
     var automaticSourceRoots: Boolean,
     var automaticPid: Boolean,
     // Appearance
+    var fontSize: Int,
     var windowToFront: Boolean,
     var defaultVisualVmLaf: DefaultVisualVmLaf.Variant,
     var customLafClassName: String,
@@ -122,6 +128,7 @@ data class VisualVmSettingsPanelModel(
                 state.ideAsSourceViewer(),
                 state.automaticSourceRoots(),
                 state.automaticPid(),
+                state.fontSize(),
                 state.windowToFront(),
                 state
                     .laf()
