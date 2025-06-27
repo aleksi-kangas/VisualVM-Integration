@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.aleksi-kangas"
-version = "0.3.3"
+version = "0.4.0"
 
 repositories {
     mavenCentral()
@@ -33,7 +33,7 @@ intellijPlatform {
         }
 
         changeNotes = """
-            Improvements to VisualVM integration plugin settings and support for <i>--fontsize</i> argument.
+            Improved source root detection with support for libraries and SDK sources.
         """.trimIndent()
     }
 }
