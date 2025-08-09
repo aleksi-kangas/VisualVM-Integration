@@ -27,6 +27,7 @@ public record VisualVmOptions(
 
         // JDK
         Optional<String> jdkHome,
+        Optional<String> jvmOptions,
 
         // Dumps
         Optional<Long> heapDumpPid,
@@ -73,6 +74,8 @@ public record VisualVmOptions(
     // JDK
     @Nullable
     private String jdkHome = null;
+    @Nullable
+    private String jvmOptions = null;
 
     // Dumps
     @Nullable
@@ -153,6 +156,11 @@ public record VisualVmOptions(
       return this;
     }
 
+    public Builder withJvmOptions(@Nullable final String jvmOptions) {
+      this.jvmOptions = jvmOptions;
+      return this;
+    }
+
     public Builder withHeapDumpPid(@Nullable final Long heapDumpPid) {
       this.heapDumpPid = heapDumpPid;
       return this;
@@ -228,6 +236,7 @@ public record VisualVmOptions(
          Optional.ofNullable(builder.laf),
          Optional.ofNullable(builder.windowToFront),
          Optional.ofNullable(builder.jdkHome),
+         Optional.ofNullable(builder.jvmOptions),
          Optional.ofNullable(builder.heapDumpPid),
          Optional.ofNullable(builder.threadDumpPid),
          Optional.ofNullable(builder.startCpuSamplerPid),

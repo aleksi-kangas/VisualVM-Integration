@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 final class VisualVmProcess implements Runnable {
+  private static final String JVM_OPTIONS_PREFIX = "-J";
+
   private final VisualVmOptions options;
 
   VisualVmProcess(final VisualVmOptions options) {
@@ -61,6 +63,8 @@ final class VisualVmProcess implements Runnable {
       commandList.add(VisualVmCommandLineOptions.JDK_HOME.toString());
       commandList.add(jdkHome);
     });
+    // JVM options
+    options.jvmOptions().ifPresent(jvmOptions -> commandList.add(JVM_OPTIONS_PREFIX + jvmOptions));
     // Dumps
     options.heapDumpPid().ifPresent(heapDumpPid -> {
       commandList.add(VisualVmCommandLineOptions.HEAP_DUMP.toString());

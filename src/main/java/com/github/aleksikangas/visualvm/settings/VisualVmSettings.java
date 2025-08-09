@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @State(name = "com.github.aleksikangas.visualvm.settings.VisualVmSettings",
-        storages = @Storage("VisualVMIntegrationPluginSettings.xml"))
+       storages = @Storage("VisualVMIntegrationPluginSettings.xml"))
 public final class VisualVmSettings implements PersistentStateComponent<VisualVmSettings.State> {
   private State state = new State();
 
@@ -58,6 +58,8 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
     // JDK
     @Attribute
     private String jdkHomePath = "";
+    @Attribute
+    private String jvmOptions = "";
     // Directories
     @Attribute
     private String cacheDirPath = "";
@@ -78,6 +80,7 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
       laf = model.getLaf();
       windowToFront = model.getWindowToFront();
       jdkHomePath = model.getJdkHomePath();
+      jvmOptions = model.getJvmOptions();
       userDirPath = model.getUserDirPath();
       cacheDirPath = model.getCacheDirPath();
       prependClassPath = VisualVmClassPaths.ofCommaSeparated(model.getPrependClassPath());
@@ -141,6 +144,15 @@ public final class VisualVmSettings implements PersistentStateComponent<VisualVm
      */
     public Optional<String> jdkHomePath() {
       return Optional.ofNullable(jdkHomePath)
+                     .filter(p -> !p.isBlank())
+                     .map(String::new);
+    }
+
+    /**
+     * @return the non-blank JVM options, or empty
+     */
+    public Optional<String> jvmOptions() {
+      return Optional.ofNullable(jvmOptions)
                      .filter(p -> !p.isBlank())
                      .map(String::new);
     }

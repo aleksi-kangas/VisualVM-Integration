@@ -44,6 +44,7 @@ abstract class AbstractVisualVmAction extends AnAction {
     }
     // JDK
     state.jdkHomePath().ifPresent(optionsBuilder::withJdkHome);
+    state.jvmOptions().ifPresent(optionsBuilder::withJvmOptions);
     // Directories
     state.cacheDirPath().ifPresent(optionsBuilder::withCacheDir);
     state.userDirPath().ifPresent(optionsBuilder::withUserDir);

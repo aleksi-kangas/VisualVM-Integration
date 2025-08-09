@@ -68,6 +68,12 @@ fun create(state: VisualVmSettings.State): VisualVmSettingsPanel {
                     .bindText(model::jdkHomePath)
                     .comment("(--jdkhome): Overrides the JDK installation used with VisualVM.")
             }
+            row("JVM options:") {
+                textField()
+                    .align(AlignX.FILL)
+                    .bindText(model::jvmOptions)
+                    .comment("Additional JVM options for VisualVM.")
+            }
         }
         group("Directories") {
             row("Cache directory:") {
@@ -114,6 +120,7 @@ data class VisualVmSettingsPanelModel(
     var customLafClassName: String,
     // JDK
     var jdkHomePath: String,
+    var jvmOptions: String,
     // Directories
     var cacheDirPath: String,
     var userDirPath: String,
@@ -143,6 +150,7 @@ data class VisualVmSettingsPanelModel(
                     .map { x -> x.value() }
                     .orElse(""),
                 state.jdkHomePath().orElse(""),
+                state.jvmOptions().orElse(""),
                 state.cacheDirPath().orElse(""),
                 state.userDirPath().orElse(""),
                 state.prependClassPath().map { it.toString() }.orElse(""),
