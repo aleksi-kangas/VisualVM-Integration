@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.aleksi-kangas"
-version = "0.4.0"
+version = "0.4.1"
 
 repositories {
     mavenCentral()
@@ -33,7 +33,7 @@ intellijPlatform {
         }
 
         changeNotes = """
-            Improved source root detection with support for libraries and SDK sources.
+            Support for JVM options and slightly improved JVM process detection.
         """.trimIndent()
     }
 }
