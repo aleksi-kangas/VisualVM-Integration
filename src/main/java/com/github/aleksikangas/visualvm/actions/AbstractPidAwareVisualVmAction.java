@@ -1,7 +1,7 @@
 package com.github.aleksikangas.visualvm.actions;
 
 import com.github.aleksikangas.visualvm.notifications.VisualVmNotifications;
-import com.github.aleksikangas.visualvm.process.JpsProcess;
+import com.github.aleksikangas.visualvm.process.JvmProcess;
 import com.github.aleksikangas.visualvm.process.ProcessUtils;
 import com.github.aleksikangas.visualvm.settings.VisualVmSettings;
 import com.intellij.execution.process.OSProcessHandler;
@@ -42,17 +42,17 @@ abstract class AbstractPidAwareVisualVmAction extends AbstractVisualVmAction {
   private CompletableFuture<Long> askUserForPid(final AnActionEvent e) {
     final CompletableFuture<Long> selectionFuture = new CompletableFuture<>();
     final DefaultActionGroup actionGroup = new DefaultActionGroup();
-    final List<JpsProcess> jpsProcesses = ProcessUtils.listJpsProcesses();
-    if (jpsProcesses.isEmpty()) {
-      VisualVmNotifications.notifyWarning(null, "No Java processes found.");
-      selectionFuture.completeExceptionally(new IllegalStateException("No Java processes found."));
+    final List<JvmProcess> jvmProcesses = ProcessUtils.listJvmProcesses();
+    if (jvmProcesses.isEmpty()) {
+      VisualVmNotifications.notifyWarning(null, "No JVM processes found.");
+      selectionFuture.completeExceptionally(new IllegalStateException("No JVM processes found."));
       return selectionFuture;
     }
-    for (final JpsProcess jpsProcess : jpsProcesses) {
-      actionGroup.add(new AnAction(jpsProcess.toString()) {
+    for (final JvmProcess jvmProcess : jvmProcesses) {
+      actionGroup.add(new AnAction(jvmProcess.toString()) {
         @Override
         public void actionPerformed(@NotNull final AnActionEvent anActionEvent) {
-          selectionFuture.complete(jpsProcess.pid());
+          selectionFuture.complete(jvmProcess.pid());
         }
       });
     }
@@ -61,8 +61,8 @@ abstract class AbstractPidAwareVisualVmAction extends AbstractVisualVmAction {
                                                .createActionPopupMenu(ActionPlaces.TOOLWINDOW_TOOLBAR_BAR, actionGroup);
       popupMenu.getComponent().show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
     } else {
-      VisualVmNotifications.notifyWarning(null, "No Java processes found.");
-      selectionFuture.completeExceptionally(new IllegalStateException("No Java processes found."));
+      VisualVmNotifications.notifyWarning(null, "No JVM processes found.");
+      selectionFuture.completeExceptionally(new IllegalStateException("No JVM processes found."));
     }
     return selectionFuture;
   }

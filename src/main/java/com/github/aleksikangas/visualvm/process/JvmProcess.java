@@ -4,17 +4,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-/**
- * A wrapper for a process listed with <code>jps</code>.
- * @param pid  Process ID
- * @param name Process name
- */
-public record JpsProcess(long pid,
+public record JvmProcess(long pid,
                          String name) {
   @Override
   public boolean equals(final Object o) {
     if (o == null || getClass() != o.getClass()) return false;
-    final JpsProcess that = (JpsProcess) o;
+    final JvmProcess that = (JvmProcess) o;
     return pid == that.pid && Objects.equals(name, that.name);
   }
 
